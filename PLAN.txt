@@ -1,0 +1,134 @@
+
+------------------------------------------------------------
+  PLAN FOR SINO WEB APP:
+------------------------------------------------------------
+
+ - Design features/layout
+
+ - Look up sign-up forms for other sites and figure out info needed + a plan for DB storage
+
+ - Design static pages
+
+ - Create back-end API
+
+ - Design React-component
+
+ - Searchable preceptor database
+
+
+
+
+
+
+
+Name (First/Last)
+Citizenship (list of countries)
+State (for U.S)
+Email
+Phone
+Academic Status:
+   - Medical Student
+   - Graduate
+   - DO Student
+   - DO Graduate
+   - PA Student
+   - PA Graduate
+
+Graduation Year
+Medical School
+Country of School
+
+Desired Specialty
+Desired Locale
+
+Visa Assistance (checkbox)
+Housing asistance (checkbox)
+
+Clinical Rotation Dates
+   - Start date (MM DD YYYY)
+Rotation duration(weeks)
+End date (one field)
+
+Programs of Interest (check boxes):
+   - Family medicine
+   - Pediatrics
+   - Cardiology
+   - Endocrinology
+   - PM&R
+   - Pathology
+   - Internal Medicine
+   - Psychiatry
+   - Pulminology
+   - Nephrology
+   - Dermatology
+   - Plastic Surgery
+   - OBGYN
+   - Surgery
+   - GI
+   - Infectious Diseases
+   - Radiology
+   - Orthopedics
+   - Other
+
+
+USMLE PREP:
+
+USMLE Step 1:
+   - Step 1 review course
+   - High-yield step 1
+
+USMLE Step 1:
+   - Step 2 CS review course
+   - Step 2 CK review course
+
+
+ - Road to Residency
+
+
+Referral?
+
+
+
+Colorado Suboxone Clinic
+
+
+		AMG REGISTRATION:
+
+
+Register for Clinical Rotations & Submit Documents
+In order for us to schedule your clinical clerkships properly and quickly, please complete the 2-minute registration and document submission form below. Processing time for the form is 1–2 business days and you will be scheduled within 1–2 weeks.
+
+You are not required to submit the following documents at the time of registration, but you must submit them prior to your clinical clerkships with AMG Clinicals.
+
+ - Official Photo Identification 1
+ - Criminal Background Check 1
+ - Health Records & Immunizations 1
+ - PPD test result or chest X-ray, current within the past 12 months 1
+ - Malpractice Insurance ($1MM/$3MM, usually provided by your medical school) 1
+ - Resume or CV 1
+ - Letter of Good Standing 2
+ - Medical School Diploma 3
+ - School Affiliation Agreement Form 4
+ - Copy of Georgia Nursing License 4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

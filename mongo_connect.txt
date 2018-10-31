@@ -1,0 +1,5 @@
+
+DB CONNECTION:
+
+mongodb://<dbuser>:<dbpassword>@ds030607.mlab.com:30607/sino
+
