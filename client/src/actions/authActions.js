@@ -80,3 +80,14 @@ export const loginUser = info => dispatch => {
     dispatch(setCurrentUser(jwt.decode(token)));
   });
 };
+
+export const logoutUser = () => dispatch => {
+  let r = window.confirm("Are you sure?");
+  if (r) {
+    sessionStorage.clear();
+    dispatch({
+      type: SET_CURRENT_USER,
+      payload: {}
+    });
+  }
+};

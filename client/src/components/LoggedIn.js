@@ -12,6 +12,8 @@ class LoggedIn extends Component {
   checkForLogin() {
     if (this.props.isAuthenticated || sessionStorage.jwt_token) {
       return <p>User is logged in!</p>;
+    } else {
+      return <p>Please log in.</p>;
     }
   }
 

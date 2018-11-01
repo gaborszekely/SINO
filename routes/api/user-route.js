@@ -73,7 +73,7 @@ router.post("/register", (req, res) => {
     });
 });
 
-// @route     POST api/
+// @route     POST api/users/login
 // @desc      User Login
 // @access    Private
 router.post("/login", passportLogin, (req, res) => {
@@ -86,11 +86,17 @@ router.get("/secret", passportVerify, (req, res) => {
   res.status(200).send("I work!");
 });
 
-// @route     DELETE api/
+// @route     GET api/users/:id
 // @desc      Description
 // @access    Public/Private
-router.delete("/", (req, res) => {
-  //
+router.get("/info/:id", passportVerify, async (req, res) => {
+  // res.status(200).json({ message: "Hi" });
+  try {
+    let user = await UserModel.findById(req.params.id);
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
 });
 
 module.exports = router;

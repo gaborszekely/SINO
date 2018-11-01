@@ -31,16 +31,16 @@ button:focus {
   outline: none;
 }
 
-html {
-    width: 100vw;
-}
+// html {
+//     width: 100vw;
+// }
 
 body {
   font-family: "Open Sans";
   color: #5e5e5e;
   margin: 0;
   padding: 0;
-  // overflow-y: overlay;
+  overflow-y: overlay;
   overflow-x: hidden;
 }
 
@@ -52,7 +52,6 @@ h1 {
   font-weight: 600;
   margin-top: 2rem;
   margin-bottom: 6rem;
-  
 }
 
 h2 {
@@ -91,8 +90,7 @@ li {
   position: relative;
 }
 
-li a,
-.login-link {
+li a {
   color: #333;
   text-decoration: none;
   display: block;
@@ -124,6 +122,11 @@ nav {
 
 label {
   color: #333;
+  display: block;
+}
+
+input {
+  width: auto;
 }
 
 .mainsection {
@@ -179,7 +182,8 @@ label {
       rgba(21, 38, 54, 0.2) 50%,
       rgba(21, 38, 54, 0.4) 100%
     ),
-    url(../images/medical/main_header.jpg);
+    url(https://img1.wsimg.com/isteam/stock/2397);
+    // url(../images/medical/main_header.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-origin: border-box;
@@ -245,102 +249,6 @@ label {
 
 .navbar {
   position: relative;
-}
-
-/* LOGIN BOX NAVBAR LINK */
-.login-link {
-  position: relative;
-  cursor: pointer;
-}
-
-.login-link:hover {
-  color: rgb(109, 172, 213);
-}
-
-/* LOGIN BOX */
-.login-box {
-  display: none;
-  position: absolute;
-  top: 3.5rem;
-  right: -2rem;
-  background-color: #fefefe;
-  color: #333;
-  font-size: 0.8em;
-  text-align: left;
-  padding: 1em;
-  border: 1px solid #333;
-  border-radius: 0px;
-  /* box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, 0.2); */
-  box-shadow: 2px -1px 2px 0 rgba(50, 50, 50, 0.4);
-  white-space: nowrap;
-  transition: initial;
-  transform: scale(1);
-
-  button {
-    display: inline-block;
-    background-color: #eee;
-    border: 1px solid #fff;
-    padding: 0.1em 1.5em;
-    margin: 5px 0 10px 0;
-    font-size: 0.9em;
-    cursor: pointer;
-  }
-
-  button:hover {
-    background-color: #aaa;
-    border: 1px solid #aaa;
-  }
-}
-
-.login-box::after {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 0;
-  top: 3px;
-  right: 40px;
-  box-sizing: border-box;
-  border: 0.75em solid #000;
-  border-color: transparent transparent #fefefe #fefefe;
-  transform-origin: 0 0;
-  transform: rotate(135deg);
-  box-shadow: -3px 3px 3px 0 rgba(50, 50, 50, 0.5);
-}
-
-.login-box input,
-.login-box button {
-  display: block;
-}
-
-.login-box input {
-  margin: 0;
-  height: 1.5em;
-  box-shadow: 1px 1px 0px 1px rgba(255, 255, 255, 0.2);
-  position: relative;
-  background-color: rgba(0, 0, 0, 0.05);
-  border: 1px solid #666;
-  z-index: 1;
-  padding-left: 8px;
-}
-
-.login-box input:last-of-type {
-  margin-bottom: 10px;
-}
-
-.label1,
-.label2 {
-  position: relative;
-  top: 18px;
-  left: 8px;
-  display: inline-block;
-  font-size: 12px;
-  color: rgba(0, 0, 0, 0.6);
-  transition: all 0.5s ease;
-}
-
-.label1.change1,
-.label2.change2 {
-  transform: translateY(50px) translateX(-15px) scale(0.9);
 }
 
 .required {
@@ -482,4 +390,20 @@ label {
   padding: 1em 2em;
   margin-bottom: 2em;
   color: #333;
+}
+
+.userInfoRow {
+  display: grid;
+  grid-gap: .5em;
+  grid-template-columns: 220px auto;
+  padding: .5em 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.userInfoVar {
+  font-weight: bold;
+}
+
+.userInfoVal {
+  font-weight: initial;
 }
