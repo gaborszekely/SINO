@@ -1,5 +1,14 @@
-import { GET_USER_INFO } from "./types";
+import { GET_USER_INFO, UPDATE_USER_INFO } from "./types";
 import axios from "axios";
+
+export const updateUserInfo = (id, info) => dispatch => {
+  axios.put(`/api/users/update/${id}`).then(res =>
+    dispatch({
+      type: UPDATE_USER_INFO,
+      payload: res.data
+    })
+  );
+};
 
 export const getUserInfo = id => dispatch => {
   axios

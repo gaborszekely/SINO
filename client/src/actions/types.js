@@ -4,3 +4,4 @@ export const LOGOUT_USER = "LOGOUT_USER";
 
 // USER ACTIONS
 export const GET_USER_INFO = "GET_USER_INFO";
+export const UPDATE_USER_INFO = "UPDATE_USER_INFO";

@@ -8,12 +8,13 @@ import {
   Redirect
 } from "react-router-dom";
 import AppNavbar from "./AppNavbar";
-import Home from "./Home";
-import RegisterUser from "./RegisterUser";
-import LoginUser from "./LoginUser";
-// import LoggedIn from "./LoggedIn";
-import UserPortal from "./UserPortal";
+import Home from "./home/Home";
+import RegisterUser from "./user/RegisterUser";
+import LoginUser from "./user/LoginUser";
+import ChangePassword from "./user/ChangePassword";
+import UserPortal from "./user/UserPortal";
 import Error from "./Error";
+import RegistrationForm from "./user/RegistrationForm";
 import setAuthorizationToken from "../utils/setAuthorizationToken";
 import { setCurrentUser } from "../actions/authActions";
 import jwt from "jsonwebtoken";
@@ -33,6 +34,7 @@ class Main extends Component {
           <AppNavbar />
           <Switch>
             <Route path="/" exact component={Home} />
+            <Route path="/form" exact render={() => <RegistrationForm />} />
             <Route
               path="/user/portal"
               exact
@@ -47,6 +49,17 @@ class Main extends Component {
             <Route path="/logout" exact render={() => <Redirect to="/" />} />
             <Route path="/register" exact component={RegisterUser} />
             <Route path="/login" exact component={LoginUser} />
+            <Route
+              path="/user/password"
+              exact
+              render={() =>
+                this.props.isAuthenticated ? (
+                  <ChangePassword />
+                ) : (
+                  <Redirect to="/" />
+                )
+              }
+            />
             <Route component={Error} />
           </Switch>
         </React.Fragment>
@@ -60,7 +73,8 @@ Main.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  form: state.form // Optional, in case you want to extract data from the form
 });
 
 export default connect(mapStateToProps)(Main);
