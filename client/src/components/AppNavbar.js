@@ -4,6 +4,9 @@ import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { logoutUser } from "../actions/authActions";
+// import Icon from "@material-ui/core/Icon";
+// import IconName from "@material-ui/icons/{icon-name-here}";
+import AccountCircle from "@material-ui/icons/AccountCircle";
 
 class AppNavbar extends Component {
   state = {};
@@ -18,9 +21,12 @@ class AppNavbar extends Component {
 
   handleScroll = () => {
     const scrollTop = window.scrollY;
-    if (scrollTop > 200) {
+    if (scrollTop > 50) {
+      // Add Opacity
       document.getElementById("flex-wrapper").classList.add("trs");
+      // Shrink Image
       document.getElementById("logo-img").classList.add("transform");
+      // Change padding
       document.getElementById("top-row-logo").classList.add("trans");
     } else {
       document.getElementById("flex-wrapper").classList.remove("trs");
@@ -30,6 +36,13 @@ class AppNavbar extends Component {
   };
 
   render() {
+    const loginIcon = {
+      width: "18px",
+      height: "auto",
+      marginRight: "10px",
+      verticalAlign: "middle"
+    };
+
     return (
       <nav id="flex-wrapper" className="flex-wrapper">
         {/* SINO LOGO @ TOP */}
@@ -52,22 +65,32 @@ class AppNavbar extends Component {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/form" exact activeStyle={{ color: "#6dacd5" }}>
-                Formik
-              </NavLink>
+              <NavLink to="/about">About Us</NavLink>
             </li>
-            {/* <li>
-                <NavLink to="/about">About Us</NavLink>
-              </li>
+            <li>
+              <NavLink to="/services">Services</NavLink>
+            </li>
+            {!this.props.isAuthenticated && (
               <li>
-                <NavLink to="/services">Our Services</NavLink>
+                <NavLink
+                  to="/register"
+                  exact
+                  activeStyle={{ color: "#6dacd5" }}
+                >
+                  Register
+                </NavLink>
               </li>
-              <li>
-                <NavLink to="/contact">Contact Us</NavLink>
-              </li>
-              <li>
-                <NavLink to="/faq">FAQ</NavLink>
-              </li> */}
+            )}
+            <li>
+              <NavLink to="/contact">Contact Us</NavLink>
+            </li>
+            <li>
+              <NavLink to="/faq">FAQ</NavLink>
+            </li>
+          </ul>
+        </div>
+        <div className="login-links">
+          <ul className="navbar">
             {this.props.isAuthenticated && (
               <React.Fragment>
                 <li>
@@ -94,17 +117,10 @@ class AppNavbar extends Component {
             {!this.props.isAuthenticated && (
               <React.Fragment>
                 <li>
-                  <NavLink
-                    to="/register"
-                    exact
-                    activeStyle={{ color: "#6dacd5" }}
-                  >
-                    Register
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/login" exact activeStyle={{ color: "#6dacd5" }}>
-                    Login
+                  <NavLink to="/login" exact className="login-button">
+                    <AccountCircle style={loginIcon} />
+                    {/* <Icon className="login-circle">account_circle</Icon> */}
+                    <span className="login-text">Login</span>
                   </NavLink>
                 </li>
               </React.Fragment>
@@ -127,5 +143,7 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser }
+  { logoutUser },
+  null,
+  { pure: false }
 )(AppNavbar);

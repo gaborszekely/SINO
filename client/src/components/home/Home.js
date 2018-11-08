@@ -13,33 +13,39 @@ class Home extends Component {
 
   componentDidMount() {
     window.addEventListener("scroll", this.parralax);
+    window.addEventListener("scroll", this.textParralax);
   }
 
   componentWillUnmount() {
     window.removeEventListener("scroll", this.parralax);
+    window.removeEventListener("scroll", this.textParralax);
   }
 
   parralax = () => {
     const scrollTop = window.scrollY;
     const speed = 0.33;
     const posY = scrollTop * speed;
-    this.setState({posY: posY})
-    // console.log(document.querySelector(".parralax-bg"));
-    // document.querySelector(".parralax-bg").style.backgroundY = ;
+    this.setState({ posY: posY });
   };
 
-  // var wScroll = $(window).scrollTop();
-  // var speed = 0.33;
-  // var total = wScroll * speed;
-  // $(".parralax-bg").css("background-position-y", "calc(14% + " + total + "px)");
+  textParralax = () => {
+    // const box = document.getElementById("inner-box");
+    const scrollTop = window.scrollY * 0.5;
+    console.log(scrollTop);
+    this.setState({ textPosY: scrollTop });
+  };
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         {/* MAIN HEADER */}
         <header>
-          <div style={{backgroundPositionY: this.state.posY}} className="header-row parralax-bg" id="header-row">
-            <div id="inner-box">
+          <div
+            style={{ backgroundPositionY: this.state.posY }}
+            className="header-row parralax-bg"
+            id="header-row"
+          >
+            <div style={{ top: this.state.textPosY }} id="inner-box">
               <h1>
                 Providing Quality U.S.
                 <br />
@@ -103,45 +109,7 @@ class Home extends Component {
         </section>
         <section>Subscribe</section>
         <section>Social</section>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non
-          cupiditate sequi aut explicabo aliquam, nam. Veniam placeat, est
-          dolorem. Optio error, iste commodi dignissimos nostrum quos voluptatum
-          culpa! Quasi hic doloremque, et ratione necessitatibus animi, libero
-          fugiat nobis dolor cum nisi natus consequatur culpa soluta illum
-          aliquid cupiditate, reprehenderit numquam quis voluptates distinctio
-          voluptatum minima saepe quo. Excepturi laudantium totam, quibusdam
-          sit, dolore vitae sapiente officia autem blanditiis officiis alias,
-          doloribus quasi qui! Odio doloremque, quam cum, maxime harum dolor
-          iure laudantium excepturi eum ab eius debitis quisquam, maiores, sint
-          quo dolorem totam. Quam nostrum deleniti sequi ipsum recusandae, quasi
-          enim quibusdam, hic tempore dolore id ratione soluta itaque laudantium
-          accusamus perspiciatis, natus doloremque accusantium exercitationem
-          quidem ipsam distinctio quas maiores consectetur! Numquam eveniet
-          optio quo porro quibusdam, obcaecati asperiores dicta magnam adipisci
-          dolorum molestiae, sunt eos ipsam doloremque tempora et blanditiis
-          dolor voluptas sapiente provident quia a in expedita non culpa. Omnis
-          consequatur dolore minima quis, deserunt adipisci, porro rerum ad iure
-          ea unde nobis distinctio, velit cum quod enim ipsum, sint! Expedita
-          aliquid, harum minus cum enim rerum dolorem quia obcaecati minima
-          nihil at suscipit autem assumenda consectetur magnam doloremque veniam
-          non cumque. Earum, eos. Velit culpa minima a cum delectus, ipsam
-          similique perspiciatis hic maxime sit suscipit rem possimus ipsa
-          recusandae dignissimos sequi voluptas autem perferendis, et quibusdam!
-          Quos, asperiores impedit reprehenderit totam! Ipsa ullam earum,
-          obcaecati omnis magni? Culpa cum, temporibus dignissimos ducimus ex
-          eligendi quos. Non, illum, reiciendis explicabo, nesciunt debitis
-          omnis voluptatum vel ipsa consequuntur, sit mollitia ut assumenda
-          obcaecati quod illo! Laudantium ipsa ipsam, aliquid aliquam
-          voluptatibus ratione ex, tempore vitae recusandae omnis expedita
-          voluptas accusamus repellat autem possimus iusto, id harum sit
-          inventore sed suscipit. Rerum odio ratione porro, saepe alias
-          blanditiis, magnam corporis. Quos possimus quaerat minima maxime,
-          itaque nemo modi nulla similique nisi, quibusdam dolor quae hic
-          cupiditate dolorem, nobis quasi laudantium exercitationem dolorum
-          omnis excepturi ex voluptate perspiciatis.
-        </p>
-      </div>
+      </React.Fragment>
     );
   }
 }

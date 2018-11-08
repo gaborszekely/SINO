@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import "./assets/css/style.css";
 import { Provider } from "react-redux";
 import store from "./store";
-import Main from "./components/Main";
+import Routes from "./components/Routes";
 
 class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Main />
+        <Routes />
       </Provider>
     );
   }

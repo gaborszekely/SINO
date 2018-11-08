@@ -13,6 +13,7 @@ const passport = require("passport");
 require("./config/passport")(passport);
 
 const userRoute = require("./routes/api/user-route");
+const productRoute = require("./routes/api/product-route");
 
 /*
  * ENVIRONMENT VARIBLES
@@ -65,6 +66,7 @@ app.use(passport.initialize());
 // });
 
 app.use("/api/users", userRoute);
+app.use("/api/products", productRoute);
 
 // LISTEN FOR SERVER
 const port = process.env.PORT || 5001;

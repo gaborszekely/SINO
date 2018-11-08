@@ -19,7 +19,8 @@ class LoginUser extends Component {
       password: this.state.password
     };
     await loginUser(userInfo);
-    this.props.history.push("/");
+    this.props.history.push("/user/portal");
+    // this.context.router.history.push("/user/portal");
   };
 
   handleChange = e => {
@@ -28,34 +29,40 @@ class LoginUser extends Component {
 
   render() {
     return (
-      <div style={{ margin: "2em" }}>
+      <div style={{ margin: "2em", marginTop: "7rem", textAlign: "center" }}>
         <h2>Login User</h2>
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            <label>Email:</label>
+        <div class="login-box">
+          <form onSubmit={this.handleSubmit}>
+            <div>
+              <label className="login-label shrunk" onClick="">
+                Email:
+              </label>
+              <input
+                name="email"
+                value={this.state.email}
+                onChange={this.handleChange}
+                autoComplete="off"
+                className="login-input"
+              />
+            </div>
             <br />
-            <input
-              name="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-              placeholder="Enter email..."
-            />
-          </div>
-          <br />
-          <div>
-            <label>Password:</label>
+            <div>
+              <label className="login-label shrunk">Password:</label>
+              <input
+                name="password"
+                type="password"
+                value={this.state.password}
+                onChange={this.handleChange}
+                autoComplete="off"
+                className="login-input"
+              />
+            </div>
             <br />
-            <input
-              name="password"
-              type="password"
-              value={this.state.password}
-              onChange={this.handleChange}
-              placeholder="Enter password..."
-            />
-          </div>
-          <br />
-          <button type="submit">Submit</button>
-        </form>
+            <button type="submit" className="login-button">
+              Log In
+            </button>
+          </form>
+        </div>
       </div>
     );
   }

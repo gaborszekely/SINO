@@ -7,20 +7,20 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
-import AppNavbar from "./AppNavbar";
 import Home from "./home/Home";
-import RegisterUser from "./user/RegisterUser";
 import LoginUser from "./user/LoginUser";
 import ChangePassword from "./user/ChangePassword";
 import UserPortal from "./user/UserPortal";
 import Error from "./Error";
-import RegistrationForm from "./user/RegistrationForm";
+import ReactFinalForm2 from "./user/react-final-form2";
+import AppNavbar from "./AppNavbar";
+import Footer from "./Footer";
 import setAuthorizationToken from "../utils/setAuthorizationToken";
 import { setCurrentUser } from "../actions/authActions";
 import jwt from "jsonwebtoken";
 import store from "../store";
 
-class Main extends Component {
+class Routes extends Component {
   componentDidMount() {
     if (sessionStorage.jwt_token) {
       setAuthorizationToken(sessionStorage.jwt_token);
@@ -34,7 +34,6 @@ class Main extends Component {
           <AppNavbar />
           <Switch>
             <Route path="/" exact component={Home} />
-            <Route path="/form" exact render={() => <RegistrationForm />} />
             <Route
               path="/user/portal"
               exact
@@ -47,8 +46,18 @@ class Main extends Component {
               }
             />
             <Route path="/logout" exact render={() => <Redirect to="/" />} />
-            <Route path="/register" exact component={RegisterUser} />
+
+            <Route path="/register" exact component={ReactFinalForm2} />
             <Route path="/login" exact component={LoginUser} />
+            {/* // render={() =>
+              //   this.props.isAuthenticated ? (
+              //     <Redirect to="/user/portal" />
+              //   ) : (
+              //     <LoginUser />
+              //   )
+              // } */}
+
+            {/* CHANGE PASSWORD */}
             <Route
               path="/user/password"
               exact
@@ -56,19 +65,21 @@ class Main extends Component {
                 this.props.isAuthenticated ? (
                   <ChangePassword />
                 ) : (
-                  <Redirect to="/" />
+                  <Redirect to="/login" />
                 )
               }
             />
+
             <Route component={Error} />
           </Switch>
+          <Footer />
         </React.Fragment>
       </Router>
     );
   }
 }
 
-Main.propTypes = {
+Routes.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired
 };
 
@@ -77,4 +88,4 @@ const mapStateToProps = state => ({
   form: state.form // Optional, in case you want to extract data from the form
 });
 
-export default connect(mapStateToProps)(Main);
+export default connect(mapStateToProps)(Routes);

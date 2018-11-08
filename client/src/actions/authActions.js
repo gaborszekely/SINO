@@ -51,6 +51,7 @@ export const addUser = userInfo => dispatch => {
   //   }
   // };
   axios.post("/api/users/register", userInfo).then(res => {
+    console.log(res);
     const token = res.data.token;
     if (typeof Storage !== "undefined") {
       sessionStorage.setItem("jwt_token", token);
@@ -85,6 +86,7 @@ export const logoutUser = () => dispatch => {
   let r = window.confirm("Are you sure?");
   if (r) {
     sessionStorage.clear();
+    this.props.history.push("/");
     dispatch({
       type: SET_CURRENT_USER,
       payload: {}

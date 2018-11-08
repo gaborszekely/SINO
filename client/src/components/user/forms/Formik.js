@@ -87,8 +87,6 @@ const FormikForm = withFormik({
   },
   validationSchema,
   handleSubmit(values, { setErrors, resetForm, setSubmitting }) {
-    // This is where you wuold make a GraphQL/HTTP request or just run some javascript
-
     // Simulate asynchronous request
     setTimeout(() => {
       if (values.email === "gabe@test.io") {

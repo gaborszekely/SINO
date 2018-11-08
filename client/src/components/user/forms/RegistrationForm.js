@@ -1,22 +1,22 @@
 import React from "react";
 import { Form, Field, withFormik } from "formik";
 import * as Yup from "yup";
-import Loader from "../Loader";
+import Loader from "../../Loader";
 
+let isLoading = true;
 // FORMIK FORMAT
 const Formik = ({ values, errors, touched, isSubmitting }) => {
-  let isLoading = false;
   return (
     <div>
-      <h2>Gegister User</h2>
+      <h2>Register User</h2>
 
       <Form>
-        <div className="regRow">
+        <div classame="regRow">
           <Field
             type="email"
             name="email"
             className="regInput"
-            placeholder="Email..."
+            placeholder="Please enter email.."
           />
           {touched.email && errors.email && <span>{errors.email}</span>}
         </div>
@@ -35,10 +35,10 @@ const Formik = ({ values, errors, touched, isSubmitting }) => {
         </label>
         <br />
         <Field component="select" name="edu_status">
-          <option value="grad">Medical Graduate</option>
-          <option value="md">M.D. Student</option>
-          <option value="pa">Physician's Assistant</option>
-          <option value="np">Nurse Practitioner</option>
+          <option value="Grad">Medical Graduate</option>
+          <option value="MD">M.D. Student</option>
+          <option value="PA">Physician's Assistant</option>
+          <option value="NP">Nurse Practitioner</option>
         </Field>
         <br />
         <div className="regRow">
@@ -54,7 +54,7 @@ const Formik = ({ values, errors, touched, isSubmitting }) => {
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
-    .email("Email not valid.")
+    .email("Email is not valid.")
     .required("Email is required"),
   password: Yup.string()
     .min(8, "Password must be at least 8 characters")

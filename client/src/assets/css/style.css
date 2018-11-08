@@ -20,6 +20,10 @@ button:focus {
   outline: none;
 }
 
+html {
+  width: calc(100vw-5px);
+}
+
 body {
   font-family: "Open Sans";
   color: #5e5e5e;
@@ -29,19 +33,9 @@ body {
   overflow-x: hidden;
 }
 
-h1 {
-  color: #fff;
-  font-family: "Montserrat";
-  font-size: 54px;
-  line-height: 65px;
-  font-weight: 600;
-  margin-top: 2rem;
-  margin-bottom: 6rem;
-}
-
 h2 {
   position: relative;
-  font-family: Montserrat;
+  font-family: "Montserrat";
   color: #0075c1;
   font-size: 2.7em;
   font-weight: 600;
@@ -103,8 +97,7 @@ input {
 }
 
 .flex-wrapper {
-  position: -webkit-sticky;
-  position: sticky;
+  position: fixed;
   top: 0;
   left: 0;
   display: -webkit-box;
@@ -116,20 +109,22 @@ input {
           flex-flow: row nowrap;
   background-color: white;
   width: 100%;
-  z-index: 100;
+  z-index: 3;
 }
 
 .mainsection {
+  position: relative;
   height: 100vh;
+  background-color: #fff;
+  z-index: 2;
 }
 
 .top-row-logo {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
-  display: inline-block;
   margin: auto 0;
-  padding: 1rem 0;
+  padding: 1rem 0 0.8rem 0;
   height: 100%;
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -161,9 +156,9 @@ input {
 }
 
 .top-row-links {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  -webkit-box-flex: 1.5;
+      -ms-flex: 1.5;
+          flex: 1.5;
   -webkit-box-pack: right;
       -ms-flex-pack: right;
           justify-content: right;
@@ -173,6 +168,13 @@ input {
   margin: auto 0;
   text-align: center;
   margin-right: 3.2em;
+}
+
+.login-links {
+  float: right;
+  margin: auto 0;
+  text-align: center;
+  margin-right: 5em;
 }
 
 .header-row {
@@ -185,20 +187,22 @@ input {
           flex-flow: row nowrap;
   position: relative;
   /* background: linear-gradient(),rgba(21,38,54,1)), url(images/medical/main_header.jpg); */
-  background: -webkit-gradient(linear, left top, right top, from(rgba(21, 38, 54, 0.4)), color-stop(50%, rgba(21, 38, 54, 0.2)), to(rgba(21, 38, 54, 0.4))), url(https://img1.wsimg.com/isteam/stock/2397);
-  background: linear-gradient(to right, rgba(21, 38, 54, 0.4) 0%, rgba(21, 38, 54, 0.2) 50%, rgba(21, 38, 54, 0.4) 100%), url(https://img1.wsimg.com/isteam/stock/2397);
+  background: -webkit-gradient(linear, left top, right top, from(rgba(21, 38, 54, 0.5)), color-stop(50%, rgba(21, 38, 54, 0.3)), to(rgba(21, 38, 54, 0.5))), url(https://img1.wsimg.com/isteam/stock/2397);
+  background: linear-gradient(to right, rgba(21, 38, 54, 0.5) 0%, rgba(21, 38, 54, 0.3) 50%, rgba(21, 38, 54, 0.5) 100%), url(https://img1.wsimg.com/isteam/stock/2397);
   background-repeat: no-repeat;
   background-size: cover;
   background-origin: border-box;
   background-position-y: 14%;
   text-align: center;
   padding: 0.5em;
+  margin-top: 6rem;
   -webkit-transition: initial;
   transition: initial;
   width: 100%;
 }
 
 .header-row div {
+  position: relative;
   width: 100%;
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -208,18 +212,79 @@ input {
           justify-content: right;
   margin: 0;
   padding: 6rem 0;
+  z-index: -10;
+}
+
+#inner-box {
+  position: relative;
+  width: 100%;
+  margin: auto 0;
+  -webkit-transition: initial;
+  transition: initial;
+  z-index: 1;
+}
+
+#inner-box h1 {
+  color: #fff;
+  font-family: "Montserrat";
+  font-size: 54px;
+  line-height: 65px;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 6rem;
+}
+
+#inner-box .button {
+  display: inline-block;
+  padding: 1em 2em;
+  background-color: #0075c1;
+  color: #fff;
+  font-size: 14px;
+  font-family: Roboto;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+#inner-box .button:hover {
+  background-color: #0082d6;
+}
+
+.footer {
+  text-align: center;
+  margin: auto;
+}
+
+.footer-parent {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
+  margin: 3em 8em;
+}
+
+.footer-children {
+  font-size: 0.9em;
+}
+
+.footer-children a {
+  color: #0075c1;
+  text-decoration: none;
+}
+
+.footer-children:first-of-type {
+  text-align: left;
+}
+
+.footer-children:last-of-type {
+  color: #999;
+  text-align: right;
 }
 
 .topMargin {
   margin-top: 6.7rem;
-}
-
-#inner-box {
-  width: 100%;
-  margin: auto 0;
-  /* Vertical alignment */
-  -webkit-transition: initial;
-  transition: initial;
 }
 
 .nested {
@@ -252,8 +317,72 @@ input {
   cursor: pointer;
 }
 
-.button:hover {
+.login-button {
+  display: inline-block;
+  padding: 1em 2em;
+  background-color: #0075c1;
+  color: #000;
+  font-size: 14px;
+  font-family: Roboto;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+}
+
+.button:hover, .login-button:hover {
   background-color: #0082d6;
+}
+
+.login-box {
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: #e6e6f5;
+  text-align: left;
+  width: 50%;
+  max-width: 400px;
+  border-radius: 5px;
+  border: 1px solid #999;
+  -webkit-box-shadow: 3px 3px 2px #666666;
+          box-shadow: 3px 3px 2px #666666;
+}
+
+.login-label {
+  margin-bottom: 10px;
+  position: relative;
+  margin-left: 5px;
+}
+
+.login-text {
+  vertical-align: middle;
+  font-size: 0.9em;
+}
+
+.login-input {
+  width: 100%;
+  height: 2.5em;
+}
+
+.login-button {
+  display: inline-block;
+  padding: .8em 1.6em .8em 1.4em;
+  background-color: #008fe1;
+  color: #fff;
+  font-size: 14px;
+  font-family: Roboto;
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: auto;
+  text-align: center;
+}
+
+.login-button:hover {
+  background-color: #00a0f0;
+  color: #fff;
 }
 
 .ac {

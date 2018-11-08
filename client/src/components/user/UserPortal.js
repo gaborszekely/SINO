@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
-import { getUserInfo } from "../../actions/userActions";
+import { getUserInfo, updateUserInfo } from "../../actions/userActions";
 
 class UserPortal extends PureComponent {
   state = {
@@ -53,10 +53,26 @@ class UserPortal extends PureComponent {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  onSubmit = e => {
+  handleSubmit = e => {
     e.preventDefault();
-    // CREATE AN UPDATE-USER-INFO FUNCTION IN THE USER-ACTIONS FILE AS WELL AS CREATE AN API ROUTE
-    // this.props.updateUserInfo();
+    const userData = {
+      name_first: this.state.name_first,
+      name_last: this.state.name_last,
+      email: this.state.email,
+      address_street: this.state.address_street,
+      address_unit: this.state.address_unit,
+      address_city: this.state.address_city,
+      address_state: this.state.address_state,
+      address_zip: this.state.address_zip,
+      address_country: this.state.address_country,
+      phone: this.state.phone,
+      school: this.state.school,
+      edu_status: this.state.edu_status,
+      grad_month: this.state.grad_month,
+      grad_year: this.state.grad_year
+    };
+    // console.log(userData);
+    this.props.updateUserInfo(this.props.userId, userData);
   };
 
   render() {
@@ -258,70 +274,6 @@ class UserPortal extends PureComponent {
           <button type="submit">Update Changes</button>
         </form>
       </div>
-      // <div style={{ margin: "2em" }}>
-      //   <h2>User Portal</h2>
-      //   <p>You have reached the User Portal.</p>
-      //   <br />
-      //   <h3>View User Information:</h3>
-      //   <br />
-      //   <h4>Personal:</h4>
-      //   <div className="userInfoRow">
-      //     <div className="userInfoVar">
-      //       <b>Name:</b>
-      //     </div>
-      //     <div className="userInfoVal">
-      //       {user.name_first} {user.name_last}
-      //     </div>
-      //   </div>
-      //   <div className="userInfoRow">
-      //     <div className="userInfoVar">
-      //       <b>Email:</b>
-      //     </div>
-      //     <div className="userInfoVal">{user.email}</div>
-      //   </div>
-      //   <div className="userInfoRow">
-      //     <div className="userInfoVar">
-      //       <b>Address:</b>
-      //     </div>
-      //     <div className="userInfoVal">
-      //       {user.address_street}
-      //       <br />
-      //       {user.address_unit && user.address_unit}
-      //       <br />
-      //       {user.address_city}, {user.address_state} {user.address_zip}
-      //       <br />
-      //       {user.address_country}
-      //     </div>
-      //   </div>
-      //   <div className="userInfoRow">
-      //     <div className="userInfoVar">
-      //       <b>Phone:</b>
-      //     </div>
-      //     <div className="userInfoVal">{user.phone}</div>
-      //   </div>
-      //   <br />
-      //   <h4>Educational Info:</h4>
-      //   <div className="userInfoRow">
-      //     <div className="userInfoVar">
-      //       <b>School:</b>
-      //     </div>
-      //     <div className="userInfoVal">{user.school}</div>
-      //   </div>
-      //   <div className="userInfoRow">
-      //     <div className="userInfoVar">
-      //       <b>Educational Status:</b>
-      //     </div>
-      //     <div className="userInfoVal">{user.edu_status}</div>
-      //   </div>
-      //   <div className="userInfoRow">
-      //     <div className="userInfoVar">
-      //       <b>Graduation:</b>
-      //     </div>
-      //     <div className="userInfoVal">
-      //       {user.grad_month} {user.grad_year}
-      //     </div>
-      //   </div>
-      // </div>
     );
   }
 }
@@ -329,7 +281,8 @@ class UserPortal extends PureComponent {
 UserPortal.propTypes = {
   userId: PropTypes.string.isRequired,
   user: PropTypes.object.isRequired,
-  getUserInfo: PropTypes.func.isRequired
+  getUserInfo: PropTypes.func.isRequired,
+  updateUserInfo: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -339,5 +292,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getUserInfo }
+  { getUserInfo, updateUserInfo }
 )(UserPortal);

@@ -34,9 +34,12 @@ module.exports = passport => {
       },
       async (email, password, done) => {
         try {
-          let query = { email };
+          console.log(email);
+          console.log(password);
+          let query = { "personal.email": email };
           const user = await UserModel.findOne(query);
           if (!user) {
+            console.log("NO USER");
             return done(null, false);
           }
           const isMatch = await user.isValidPassword(password);

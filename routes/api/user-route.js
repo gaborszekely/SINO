@@ -4,11 +4,25 @@ const UserModel = require("../../models/user-model");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const config = require("../../config");
-// const { validateBody, schemas } = require("../../helpers/routeHelpers");
 const passportLogin = passport.authenticate("local", { session: false });
 const passportVerify = passport.authenticate("jwt", { session: false });
 
 // JWT token generation/validation
+// signToken = user => {
+//   const isAdmin = user._id === 12345 ? true : false;
+//   return jwt.sign(
+//     {
+//       iss: "Sino Medical",
+//       sub: user._id,
+//       // name: user.fullName || "Unknown",
+//       // admin: isAdmin || false,
+//       iat: new Date().getTime(), // Current Time
+//       exp: new Date().setDate(new Date().getDate() + 1)
+//     },
+//     config.JWT_SECRET
+//   );
+// };
+
 signToken = user => {
   return jwt.sign(
     {
@@ -21,36 +35,14 @@ signToken = user => {
   );
 };
 
-// @route     POST api/
+// @route     POST api/users/register
 // @desc      Register New User
 // @access    Public
 router.post("/register", (req, res) => {
-  const user = {
-    name: {
-      firstName: req.body.name.firstName,
-      lastName: req.body.name.lastName
-    },
-    email: req.body.email,
-    password: req.body.password, // MUST ENCRYPT FIRST!!!
-    address: {
-      street: req.body.address.street,
-      unit: req.body.address.unit,
-      city: req.body.address.city,
-      state: req.body.address.state,
-      zip: req.body.address.zip,
-      country: req.body.address.country
-    },
-    phone: req.body.phone,
-    school: req.body.school,
-    edu_status: req.body.edu_status,
-    graduation: {
-      month: req.body.graduation.month,
-      year: req.body.graduation.year
-    }
-  };
-
   // CHECK FOR EXISTING USER
-  const query = { email: user.email };
+  const query = {
+    personal: { email: req.body.personal.email }
+  };
   UserModel.findOne(query, (err, user) => {
     if (err) throw err;
     if (user) {
@@ -59,11 +51,10 @@ router.post("/register", (req, res) => {
   });
 
   // ADD USER TO DB
-  const newUser = new UserModel(user);
+  const newUser = new UserModel(req.body);
   newUser
     .save()
     .then(() => {
-      // Generate token
       const token = signToken(newUser);
       res.status(201).json({ token });
     })
@@ -74,21 +65,32 @@ router.post("/register", (req, res) => {
 });
 
 // @route     POST api/users/login
-// @desc      User Login
+// @desc      Login Page
 // @access    Private
 router.post("/login", passportLogin, (req, res) => {
   const token = signToken(req.user);
   res.status(200).json({ token });
 });
 
-// SECRET ROUTE REQUIRING TOKEN
-router.get("/secret", passportVerify, (req, res) => {
-  res.status(200).send("I work!");
+// @route     POST api/users/validate
+// @desc      Validate Email Address (to see if it's taken when registering)
+// @access    Public
+router.post("/validate", async (req, res) => {
+  try {
+    if (!req.body.email) {
+      res.status(200).json({ message: "Invalid body" });
+    } else {
+      let users = await UserModel.find({ email: req.body.email });
+      res.status(200).json({ users: users.length });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
 });
 
 // @route     GET api/users/:id
-// @desc      Description
-// @access    Public/Private
+// @desc      Fetch User Information
+// @access    Private
 router.get("/info/:id", passportVerify, async (req, res) => {
   // res.status(200).json({ message: "Hi" });
   try {
@@ -97,6 +99,73 @@ router.get("/info/:id", passportVerify, async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err });
   }
+});
+
+// @route     PUT api/users/update
+// @desc      Update User Information
+// @access    Private
+router.put("/update/:id", passportVerify, (req, res) => {
+  // res.status(200).json({ message: "Hi" });
+  UserModel.findByIdAndUpdate(
+    req.params.id,
+    {
+      $set: {
+        name: {
+          firstName: req.body.name_first,
+          lastName: req.body.name_last
+        },
+        email: req.body.email,
+        address: {
+          street: req.body.address_street,
+          unit: req.body.address_unit,
+          city: req.body.address_city,
+          state: req.body.address_state,
+          zip: req.body.address_zip,
+          country: req.body.address_country
+        },
+        phone: req.body.phone,
+        school: req.body.school,
+        edu_status: req.body.edu_status,
+        graduation: {
+          month: req.body.grad_month,
+          year: req.body.grad_year
+        }
+      }
+    },
+    { new: true }
+  ).then(resp => res.status(200).json(resp));
+  // let newUser = await UserModel.findOneAndReplace(
+  //   query,
+  //   {
+  //     name: {
+  //       firstName: req.body.name_first,
+  //       lastName: req.body.name_last
+  //     },
+  //     email: req.body.email,
+  //     address: {
+  //       street: req.body.address_street,
+  //       unit: req.body.address_unit,
+  //       city: req.body.address_city,
+  //       state: req.body.address_state,
+  //       zip: req.body.address_zip,
+  //       country: req.body.address_country
+  //     },
+  //     phone: req.body.phone,
+  //     school: req.body.school,
+  //     edu_status: req.body.edu_status,
+  //     graduation: {
+  //       month: req.body.grad_month,
+  //       year: req.body.grad_year
+  //     }
+  //   },
+  //   {
+  //     returnNewDocument: true
+  //   }
+  // );
+  //   res.status(200).json(newUser);
+  // } catch (error) {
+  //   res.status(500).json({ error });
+  // }
 });
 
 module.exports = router;
