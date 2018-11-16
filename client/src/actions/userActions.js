@@ -24,6 +24,7 @@ export const getUserInfo = id => dispatch => {
         edu_type
       } = res.data.education;
       const { month, year } = res.data.education.graduation;
+      const { events, userEvents } = res.data.portal;
 
       const user = {
         name_first: firstName,
@@ -43,8 +44,11 @@ export const getUserInfo = id => dispatch => {
         edu_status,
         edu_type,
         grad_month: month,
-        grad_year: year
+        grad_year: year,
+        events,
+        userEvents
       };
+
       dispatch({
         type: GET_USER_INFO,
         payload: user

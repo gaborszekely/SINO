@@ -226,6 +226,7 @@ header {
   -webkit-transition: initial;
   transition: initial;
   width: 100%;
+  height: 80vh;
 }
 
 header #inner-box {
@@ -245,7 +246,8 @@ header #inner-box h1 {
 header #inner-box .button {
   font-size: 14px;
   margin-bottom: 1rem;
-  width: 100%;
+  width: 80%;
+  max-width: 300px;
 }
 
 header #inner-box .button:hover {
@@ -335,7 +337,7 @@ header #inner-box .button:hover {
  */
 .mainsection {
   position: relative;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #fff;
   z-index: 2;
 }
@@ -366,8 +368,56 @@ header #inner-box .button:hover {
   text-align: right;
 }
 
+.nested {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 30px auto;
+      grid-template-columns: 30px auto;
+  grid-gap: 0.5em;
+}
+
+.abContainer {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(300px, 1fr))[auto-fill];
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 3em;
+  width: 75%;
+  margin: 0px auto;
+  padding-bottom: 4rem;
+}
+
+.abImage1,
+.abImage2,
+.abImage3 {
+  height: 223px;
+  width: auto;
+}
+
+.abImage1,
+.abImage2,
+.abImage3 {
+  -webkit-clip-path: circle();
+          clip-path: circle();
+}
+
+.abImage1 {
+  -webkit-clip-path: circle(39% at 65% 50%);
+          clip-path: circle(39% at 65% 50%);
+  -webkit-transform: translateX(-15%);
+          transform: translateX(-15%);
+}
+
+/*
+ * MARGINS & POSITIONING
+ *
+ */
 .topMargin {
   margin-top: 8rem;
+}
+
+.topExtraMargin {
+  margin-top: 10rem;
 }
 
 .leftMargin {
@@ -390,14 +440,6 @@ header #inner-box .button:hover {
 .rightFloat {
   float: right;
   margin-right: 25%;
-}
-
-.nested {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: 30px auto;
-      grid-template-columns: 30px auto;
-  grid-gap: 0.5em;
 }
 
 .vertical-align {
@@ -646,45 +688,10 @@ header #inner-box .button:hover {
   font-size: 0.9em;
 }
 
-.abContainer {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  width: 80%;
-  margin: 0px auto;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-  padding-bottom: 4rem;
-}
-
-.abColumn {
-  margin-right: 2em;
-}
-
-.abColumn:last-of-type {
-  margin-right: 0;
-}
-
-.abImage1,
-.abImage2,
-.abImage3 {
-  height: 223px;
-  width: auto;
-}
-
-.abImage1 {
-  -webkit-clip-path: circle(39% at 65% 50%);
-          clip-path: circle(39% at 65% 50%);
-  -webkit-transform: translateX(-15%);
-          transform: translateX(-15%);
-}
-
-.abImage2,
-.abImage3 {
-  -webkit-clip-path: circle();
-          clip-path: circle();
-}
-
+/*
+ * USER PORTAL - ACCOUNT INFO
+ *
+ */
 .userInfoRow {
   display: -ms-grid;
   display: grid;
@@ -736,9 +743,11 @@ header #inner-box .button:hover {
 
 .flashMessage {
   width: 50%;
-  padding: 1em 2em;
-  margin: 2em auto;
-  background-color: yellow;
+  padding: 1em 4em;
+  margin: 2em 0;
+  text-align: left;
+  background-color: #fff8bb;
+  border-left: 5px solid #ffeb3b;
 }
 
 .offlineMessage {
@@ -757,6 +766,8 @@ header #inner-box .button:hover {
 .tab {
   overflow: hidden;
   border: 1px solid #ccc;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
   background-color: #f1f1f1;
 }
 
@@ -788,6 +799,15 @@ header #inner-box .button:hover {
   display: none;
   border: 1px solid #ccc;
   border-top: none;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  padding: 1.5em;
+  height: 50vh;
+}
+
+.tabcontent h3, .tabcontent h4, .tabcontent h5 {
+  margin: 0;
+  padding: 0;
 }
 
 /*
@@ -798,15 +818,20 @@ header #inner-box .button:hover {
   position: relative;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 1fr 1fr;
-      grid-template-columns: 1fr 1fr;
+  -ms-grid-columns: 1fr minmax(auto, 400px);
+      grid-template-columns: 1fr minmax(auto, 400px);
+  grid-gap: 2em;
   width: 80%;
-  margin: 0px auto;
-  background-color: white;
+  max-width: 1000px;
+  margin: 40px auto;
+  margin-bottom: 100px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 .portalIntroWrapper {
   position: relative;
+  border: 1px solid green;
 }
 
 .portalIntroWrapper h3 {
@@ -818,10 +843,21 @@ header #inner-box .button:hover {
   position: relative;
   width: 100%;
   background-color: #f8f8fa;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 .portalEventsInner {
-  padding: 1.5em;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  height: 100%;
 }
 
 .portalEventsInner h4 {
@@ -836,15 +872,24 @@ header #inner-box .button:hover {
   border: none;
   padding: 1em;
   font-size: .8em;
-  color: #999;
+  color: #666;
+}
+
+.portalEventsInner input::-webkit-input-placeholder,
+.portalEventsInner input:-moz-placeholder,
+.portalEventsInner input::-moz-placeholder,
+.portalEventsInner input:-ms-input-placeholder {
+  color: #ccc !important;
   text-transform: uppercase;
 }
 
 .portalEventsInner .eventsList {
   position: relative;
   background-color: #fff;
-  max-height: 150px;
-  overflow-y: scroll;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  overflow-y: auto;
 }
 
 .userEvents {
@@ -891,15 +936,18 @@ li {
   font-size: 0.75em;
 }
 
+.eventLi:last-of-type {
+  border-bottom: none;
+}
+
 .iconWrapper {
   position: relative;
   float: right;
   z-index: 1;
 }
 
-.addButton {
+.feather {
   position: relative;
-  float: right;
   color: #333;
   cursor: pointer;
   height: 16px;
@@ -910,8 +958,20 @@ li {
   transition: opacity 200ms ease;
 }
 
-.addButton:hover {
+.feather:hover {
   opacity: 0.6;
+}
+
+.addButton {
+  float: right;
+}
+
+.calendarButton {
+  margin-right: 1em;
+}
+
+.eventDate {
+  font-size: 0.8em;
 }
 
 h1, h2, h3 {
@@ -1184,6 +1244,13 @@ Button
  *                          MEDIA QUERIES
  *
  *******************************************************************/
+@media (min-width: 1231px) {
+  #inner-box h1 {
+    font-size: 70px;
+    line-height: 90px;
+  }
+}
+
 @media (min-width: 1096px) and (max-width: 1230px) {
   .top-row-links {
     font-size: 0.9em;

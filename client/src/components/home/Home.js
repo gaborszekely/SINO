@@ -8,17 +8,21 @@ import medical_img3 from "../../assets/images/medical/medical_img3.jpg";
 
 class Home extends Component {
   state = {
-    posY: 0
+    posY: 0,
+    opacity: 1
   };
 
   componentDidMount() {
     window.addEventListener("scroll", this.parralax);
     window.addEventListener("scroll", this.textParralax);
+    window.addEventListener("scroll", this.textFade);
+    console.log(document.getElementById("header-row").style.width);
   }
 
   componentWillUnmount() {
     window.removeEventListener("scroll", this.parralax);
     window.removeEventListener("scroll", this.textParralax);
+    window.removeEventListener("scroll", this.textFade);
   }
 
   parralax = () => {
@@ -33,6 +37,12 @@ class Home extends Component {
     this.setState({ textPosY: scrollTop });
   };
 
+  textFade = () => {
+    const scrollTop = window.scrollY;
+    const opacity = 1 - scrollTop / 700;
+    this.setState({ opacity });
+  };
+
   render() {
     return (
       <div className="clever">
@@ -42,7 +52,10 @@ class Home extends Component {
           className="parralax-bg"
           id="header-row"
         >
-          <div style={{ top: this.state.textPosY }} id="inner-box">
+          <div
+            style={{ top: this.state.textPosY, opacity: this.state.opacity }}
+            id="inner-box"
+          >
             <h1>
               Providing Quality U.S.
               <br />

@@ -9,7 +9,7 @@ const passportVerify = passport.authenticate("jwt", { session: false });
 
 // JWT token generation/validation
 signToken = user => {
-  const isAdmin = user._id == "5beaf724b36e070884ae7b6e" ? true : false;
+  const isAdmin = user._id == "5beb1603c399c63d40aceb8e" ? true : false;
   return jwt.sign(
     {
       iss: "Sino Medical",

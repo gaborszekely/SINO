@@ -8,9 +8,10 @@ import {
   GET_EVENTS,
   ITEMS_LOADING
 } from "../types";
+import { addFlashMessage } from "../flashActions";
 
 // GET EVENTS
-export const getEvents = user => dispatch => {
+export const getEvents = () => dispatch => {
   // dispatch(setItemsLoading());
   axios
     .get(`/api/portal/getGlobalEvents`)
@@ -18,17 +19,24 @@ export const getEvents = user => dispatch => {
 };
 
 // ADD EVENT
-export const addUserEvent = (event, user) => dispatch => {
-  const data = { event, user };
+export const addUserEvent = (eventId, userId) => dispatch => {
+  const data = { eventId, userId };
   axios
     .post("/api/portal/addUserEvent", data)
-    .then(res =>
+    .then(res => {
+      console.log(res.data);
+      dispatch(addFlashMessage("Success! Event has been added."));
       dispatch({
         type: ADD_EVENT,
-        payload: res.data
-      })
-    )
-    .catch(err => console.error(err.stack));
+        payload: res.data.portal.events
+      });
+    })
+    .catch(err => {
+      dispatch(
+        addFlashMessage("Error - Could not add event. Please try again!")
+      );
+      console.error(err.stack);
+    });
 };
 
 // ADD EVENT

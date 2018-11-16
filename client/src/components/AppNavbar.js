@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { logoutUser } from "../actions/authActions";
-import { Offline, Online } from "react-detect-offline";
+import { Offline } from "react-detect-offline";
 import OfflineMessage from "./OfflineMessage";
 // import Icon from "@material-ui/core/Icon";
 // import IconName from "@material-ui/icons/{icon-name-here}";

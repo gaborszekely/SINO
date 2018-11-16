@@ -4,24 +4,28 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addUserEvent } from "../../actions/portal/eventActions";
 
-class SingleEvent extends Component {
+class SingleUserEvent extends Component {
   state = {};
-  addItem = eventId => {
-    console.log(`Adding item "${eventId}" for user ${this.props.userId}`);
-    this.props.addUserEvent(eventId, this.props.userId);
+  addItem = item => {
+    console.log(`Adding "${item}"...`);
   };
 
   render() {
-    const { id, name, date } = this.props;
+    const { id, name } = this.props;
     return (
       <li key={id} className="eventLi">
+        <FeatherIcon
+          icon="calendar"
+          className="feather calendarButton"
+          onClick={() => {
+            this.addItem(id);
+          }}
+        />
         {name}
-        <br />
-        <span className="eventDate">{date}</span>
         <span className="iconWrapper">
           <FeatherIcon
-            icon="plus"
-            className="addButton feather"
+            icon="chevron-down"
+            className="feather addButton"
             onClick={() => {
               this.addItem(id);
             }}
@@ -32,7 +36,7 @@ class SingleEvent extends Component {
   }
 }
 
-SingleEvent.propTypes = {
+SingleUserEvent.propTypes = {
   addUserEvent: PropTypes.func.isRequired,
   userId: PropTypes.string.isRequired
 };
@@ -44,4 +48,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { addUserEvent }
-)(SingleEvent);
+)(SingleUserEvent);

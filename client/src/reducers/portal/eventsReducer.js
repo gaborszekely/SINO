@@ -10,7 +10,9 @@ import {
 
 let initialState = {
   loading: false,
-  events: []
+  events: [],
+  userEvents: [],
+  userCustomEvents: []
 };
 
 export default function events(state = initialState, action) {
@@ -21,11 +23,17 @@ export default function events(state = initialState, action) {
         loading: false,
         events: action.payload
       };
-
+    // case SET_USER_EVENTS:
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //     userEvents: action.payload.events,
+    //     userCustomEvents: action.payload.userEvents
+    //   };
     case ADD_EVENT:
       return {
         ...state,
-        events: [...state.events, action.payload]
+        userEvents: action.payload
       };
 
     case DELETE_EVENT:

@@ -14,9 +14,8 @@ class Portal extends Component {
 
   render() {
     return (
-      <div className="topMargin leftMargin">
+      <div className="topExtraMargin">
         <center>
-          <h2>User Portal</h2>
           {this.props.flashMessage.length > 0 && (
             <div className="flashMessage">{this.props.flashMessage}</div>
           )}

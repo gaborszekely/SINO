@@ -236,6 +236,7 @@ header {
   margin-top: 6rem;
   transition: initial;
   width: 100%;
+  height: 80vh;
 
   #inner-box {
     position: relative;
@@ -252,7 +253,8 @@ header {
     .button {
       font-size: 14px;
       margin-bottom: 1rem;
-      width: 100%;
+      width: 80%;
+      max-width: 300px;
     }
 
     .button:hover {
@@ -355,7 +357,7 @@ header {
 
 .mainsection {
   position: relative;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #fff;
   z-index: 2;
 }
@@ -384,13 +386,68 @@ header {
   text-align: right;
 }
 
-// .clever {
-//   padding-right: calc(100vw - 100%);
+.nested {
+  display: grid;
+  grid-template-columns: 30px auto;
+  grid-gap: 0.5em;
+}
+
+
+
+
+// .abContainer {
+//   display: flex;
+//   width: 80%;
+//   margin: 0px auto;
+//   justify-content: space-around;
+//   padding-bottom: 4rem;
 // }
+
+.abContainer {
+  display: grid;
+  // grid-template-columns: 1fr 1fr 1fr;
+  // grid-template-columns: 600px 600px 600px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 3em;
+  width: 75%;
+  margin: 0px auto;
+  padding-bottom: 4rem;
+}
+
+.abImage1,
+.abImage2,
+.abImage3 {
+  height: 223px;
+  width: auto;
+}
+
+.abImage1,
+.abImage2,
+.abImage3 {
+  clip-path: circle();
+}
+
+.abImage1 {
+  clip-path: circle(39% at 65% 50%);
+  transform: translateX(-15%);
+}
+
+
+
+
+/*
+ * MARGINS & POSITIONING
+ *
+ */
 
 .topMargin {
   margin-top: 8rem;
 }
+
+.topExtraMargin {
+  margin-top: 10rem;
+}
+
 
 .leftMargin {
   margin-left: 2rem;
@@ -412,12 +469,6 @@ header {
 .rightFloat {
   float: right;
   margin-right: 25%;
-}
-
-.nested {
-  display: grid;
-  grid-template-columns: 30px auto;
-  grid-gap: 0.5em;
 }
 
 .vertical-align {
@@ -578,43 +629,43 @@ header {
 // FAQ PAGE
 
 
-    .faqContainer {
-      display: flex;
-      width: 80%;
-      margin: 0 auto;
-    }
-  
-    .faq {
-      flex: 2;
-      width: auto;
-      height: auto;
-    }
-  
-    .faq h3 {
-      font-family: "Roboto", Montserrat, "Open Sans", "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
-      font-size: 1.1rem;
-      font-weight: 500;
-      color: #5e5e5e;
-    }
-  
-    .faq p {
-      font-family: "Roboto", "Open Sans", Helvetica, Arial, "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", "sans-serif";
-      font-size: .9rem;
-      color: #5e5e5e;
-      font-weight: 400;
-      line-height: 1.4rem;
-    }
-  
-    .faqImgContainer {
-      flex: 1;
-      margin-right: 4em;
-      margin-top: 1rem;
-    }
-  
-    .faqImg {
-      width: 100%;
-      height: auto;
-    }
+.faqContainer {
+  display: flex;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.faq {
+  flex: 2;
+  width: auto;
+  height: auto;
+}
+
+.faq h3 {
+  font-family: "Roboto", Montserrat, "Open Sans", "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #5e5e5e;
+}
+
+.faq p {
+  font-family: "Roboto", "Open Sans", Helvetica, Arial, "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", "sans-serif";
+  font-size: .9rem;
+  color: #5e5e5e;
+  font-weight: 400;
+  line-height: 1.4rem;
+}
+
+.faqImgContainer {
+  flex: 1;
+  margin-right: 4em;
+  margin-top: 1rem;
+}
+
+.faqImg {
+  width: 100%;
+  height: auto;
+}
 
 
 
@@ -642,38 +693,12 @@ header {
   font-size: 0.9em;
 }
 
-.abContainer {
-  display: flex;
-  width: 80%;
-  margin: 0px auto;
-  justify-content: space-around;
-  padding-bottom: 4rem;
-}
 
-.abColumn {
-  margin-right: 2em;
-}
 
-.abColumn:last-of-type {
-  margin-right: 0;
-}
-
-.abImage1,
-.abImage2,
-.abImage3 {
-  height: 223px;
-  width: auto;
-}
-
-.abImage1 {
-  clip-path: circle(39% at 65% 50%);
-  transform: translateX(-15%);
-}
-
-.abImage2,
-.abImage3 {
-  clip-path: circle();
-}
+/*
+ * USER PORTAL - ACCOUNT INFO
+ *
+ */
 
 .userInfoRow {
   display: grid;
@@ -724,9 +749,12 @@ header {
 
 .flashMessage {
   width: 50%;
-  padding: 1em 2em;
-  margin: 2em auto;
-  background-color: yellow;
+  padding: 1em 4em;
+  margin: 2em 0;
+  text-align: left;
+  background-color: rgb(255, 248, 187);
+  border-left: 5px solid rgb(255, 235, 59);
+  // background-image: linear-gradient(to right, rgba(255, 248, 187, 1), rgba(255, 248, 187, 0));
 }
 
 .offlineMessage {
@@ -747,6 +775,8 @@ header {
  .tab {
     overflow: hidden;
     border: 1px solid #ccc;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
     background-color: #f1f1f1;
 }
 
@@ -774,9 +804,18 @@ header {
 
 /* Style the tab content */
 .tabcontent {
-    display: none;
-    border: 1px solid #ccc;
-    border-top: none;
+  display: none;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  padding: 1.5em;
+  height: 50vh;
+
+  h3, h4, h5 {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 
@@ -791,14 +830,19 @@ header {
 .portalWrapper {
   position: relative;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr minmax(auto, 400px);
+  grid-gap: 2em;
   width: 80%;
-  margin: 0px auto;
-  background-color: white;
+  max-width: 1000px;
+  margin: 40px auto;
+  margin-bottom: 100px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 .portalIntroWrapper {
   position: relative;
+  border: 1px solid green;
 
   h3 {
     position: relative;
@@ -809,12 +853,17 @@ header {
 .portalEvents {
   position: relative;
   width: 100%;
-  // padding: 1em 2em;
   background-color: color(containerGray);
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 .portalEventsInner {
-  padding: 1.5em;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  display: flex;
+  flex-flow: column;
+  height: 100%;
 
   & h4 {
     padding: 0;
@@ -828,15 +877,24 @@ header {
     border: none;
     padding: 1em;
     font-size: .8em;
-    color: #999;
-    text-transform: uppercase;
+    color: #666;
   }
+
+  & input::-webkit-input-placeholder, 
+  & input:-moz-placeholder,
+  & input::-moz-placeholder,
+  & input:-ms-input-placeholder {
+    color: #ccc !important;
+    text-transform: uppercase;
+    }
 
   & .eventsList {
     position: relative;
     background-color: #fff;
-    max-height: 150px;
-    overflow-y: scroll;
+    flex-grow : 1;
+    overflow-y: auto;
+    // max-height: 100%;
+    // max-height: calc(100% - 10px);
   }
 }
 
@@ -889,6 +947,10 @@ li {
   border-bottom: 1px solid #999;
   padding: 1em;
   font-size: 0.75em;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
 }
 
 .iconWrapper {
@@ -920,9 +982,8 @@ li {
   // }
 }
 
-.addButton {
+.feather {
   position: relative;
-  float: right;
   color: #333;
   cursor: pointer;
   // font-size: 12px;
@@ -935,6 +996,18 @@ li {
   &:hover {
     opacity: 0.6;
   }
+}
+
+.addButton {
+  float: right;
+}
+
+.calendarButton {
+  margin-right: 1em;
+}
+
+.eventDate {
+  font-size: 0.8em;
 }
 
 
@@ -1174,7 +1247,12 @@ Button
  *
  *******************************************************************/
 
-// NAVBAR
+@media(min-width: 1231px) {
+  #inner-box h1 {
+    font-size: 70px;
+    line-height: 90px;
+  }
+}
 
 @media(min-width: 1096px) and (max-width: 1230px) {
   .top-row-links {

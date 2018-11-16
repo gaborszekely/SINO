@@ -9,6 +9,7 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
+import ScrollToTop from "react-router-scroll-top";
 
 // ROUTES
 import AppNavbar from "./AppNavbar";
@@ -49,29 +50,30 @@ class Main extends Component {
     return (
       <Router>
         <React.Fragment>
-          <AppNavbar />
-          <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/about" exact component={About} />
-            <Route path="/services" exact component={Services} />
-            <Route path="/contact" exact component={Contact} />
-            <Route path="/faq" exact component={FAQ} />
-            <Route path="/maps" exact component={NewMap} />
-            <Route path="/maps2" exact component={MapContainer} />
-            <Route path="/maps3" exact component={GoogleMap} />
-            <Route
-              path="/user/portal"
-              exact
-              // component={Portal}
-              render={() =>
-                this.props.isAuthenticated ? <Portal /> : <Redirect to="/" />
-              }
-            />
-            <Route path="/logout" exact render={() => <Redirect to="/" />} />
+          <ScrollToTop>
+            <AppNavbar />
+            <Switch>
+              <Route path="/" exact component={Home} />
+              <Route path="/about" exact component={About} />
+              <Route path="/services" exact component={Services} />
+              <Route path="/contact" exact component={Contact} />
+              <Route path="/faq" exact component={FAQ} />
+              <Route path="/maps" exact component={NewMap} />
+              <Route path="/maps2" exact component={MapContainer} />
+              <Route path="/maps3" exact component={GoogleMap} />
+              <Route
+                path="/user/portal"
+                exact
+                // component={Portal}
+                render={() =>
+                  this.props.isAuthenticated ? <Portal /> : <Redirect to="/" />
+                }
+              />
+              <Route path="/logout" exact render={() => <Redirect to="/" />} />
 
-            <Route path="/register" exact component={ReactFinalForm2} />
-            <Route path="/login" exact component={LoginUser} />
-            {/* // render={() =>
+              <Route path="/register" exact component={ReactFinalForm2} />
+              <Route path="/login" exact component={LoginUser} />
+              {/* // render={() =>
               //   this.props.isAuthenticated ? (
               //     <Redirect to="/user/portal" />
               //   ) : (
@@ -79,22 +81,23 @@ class Main extends Component {
               //   )
               // } */}
 
-            {/* CHANGE PASSWORD */}
-            <Route
-              path="/user/password"
-              exact
-              render={() =>
-                this.props.isAuthenticated ? (
-                  <ChangePassword />
-                ) : (
-                  <Redirect to="/login" />
-                )
-              }
-            />
+              {/* CHANGE PASSWORD */}
+              <Route
+                path="/user/password"
+                exact
+                render={() =>
+                  this.props.isAuthenticated ? (
+                    <ChangePassword />
+                  ) : (
+                    <Redirect to="/login" />
+                  )
+                }
+              />
 
-            <Route component={Error} />
-          </Switch>
-          <Footer />
+              <Route component={Error} />
+            </Switch>
+            <Footer />
+          </ScrollToTop>
         </React.Fragment>
       </Router>
     );
