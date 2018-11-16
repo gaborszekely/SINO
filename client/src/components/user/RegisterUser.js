@@ -66,7 +66,7 @@ class RegisterUser extends Component {
   render() {
     const currentYr = new Date().getFullYear();
     return (
-      <div style={{ margin: "2em" }}>
+      <div style={{ margin: "2em", marginTop: "7rem" }}>
         <h2>Register User</h2>
         <form onSubmit={this.handleSubmit}>
           {/* <h3>Personal</h3> */}

@@ -7,13 +7,15 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const path = require("path");
+const fs = require("fs");
+const https = require("https");
 const mongoose = require("mongoose");
 mongoose.set("useCreateIndex", true);
 const passport = require("passport");
 require("./config/passport")(passport);
 
 const userRoute = require("./routes/api/user-route");
-const productRoute = require("./routes/api/product-route");
+const portalRoute = require("./routes/api/portal-route");
 
 /*
  * ENVIRONMENT VARIBLES
@@ -46,13 +48,6 @@ mongoose
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// Messages
-// app.use(require("connect-flash")());
-// app.use((req, res, next) => {
-//   res.locals.messages = require("express-messages")(req, res);
-//   next();
-// });
-
 // Passport
 app.use(passport.initialize());
 
@@ -61,13 +56,24 @@ app.use(passport.initialize());
  *
  */
 
-// app.get("/*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "index.html"));
-// });
+// Health Check
+app.get("/check", (req, res) => {
+  res.status(200).json({ message: "Connection working" });
+});
 
 app.use("/api/users", userRoute);
-app.use("/api/products", productRoute);
+app.use("/api/portal", portalRoute);
 
 // LISTEN FOR SERVER
 const port = process.env.PORT || 5001;
+
+// https
+//   .createServer(
+//     {
+//       key: fs.readFileSync("./config/https/server.key"),
+//       cert: fs.readFileSync("./config/https/server.cert")
+//     },
+//     app
+//   )
+//   .listen(port, () => console.log(`HTTP Server started on Port ${port}...`));
 app.listen(port, () => console.log(`Server started on Port ${port}...`));

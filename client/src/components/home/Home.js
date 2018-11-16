@@ -29,32 +29,28 @@ class Home extends Component {
   };
 
   textParralax = () => {
-    // const box = document.getElementById("inner-box");
     const scrollTop = window.scrollY * 0.5;
-    console.log(scrollTop);
     this.setState({ textPosY: scrollTop });
   };
 
   render() {
     return (
-      <React.Fragment>
+      <div className="clever">
         {/* MAIN HEADER */}
-        <header>
-          <div
-            style={{ backgroundPositionY: this.state.posY }}
-            className="header-row parralax-bg"
-            id="header-row"
-          >
-            <div style={{ top: this.state.textPosY }} id="inner-box">
-              <h1>
-                Providing Quality U.S.
-                <br />
-                Medical Rotations
-              </h1>
-              <NavLink to="/register" className="button ac">
-                Enroll Now
-              </NavLink>
-            </div>
+        <header
+          style={{ backgroundPositionY: this.state.posY }}
+          className="parralax-bg"
+          id="header-row"
+        >
+          <div style={{ top: this.state.textPosY }} id="inner-box">
+            <h1>
+              Providing Quality U.S.
+              <br />
+              Medical Rotations
+            </h1>
+            <NavLink to="/register" className="button">
+              Enroll Now
+            </NavLink>
           </div>
         </header>
         {/* ABOUT US */}
@@ -109,7 +105,7 @@ class Home extends Component {
         </section>
         <section>Subscribe</section>
         <section>Social</section>
-      </React.Fragment>
+      </div>
     );
   }
 }

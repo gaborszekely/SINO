@@ -1,8 +1,9 @@
 import axios from "axios";
 
 const setAuthorizationToken = token => {
-  // If token iz provided, add "Authorization" header to every request after that
+  // If token is provided, add "Authorization" header to every request after that
   if (token) {
+    // HEADER BEING SET
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     // axios.defaults.headers.common = { "Authorization": `Bearer ${token}` };
 

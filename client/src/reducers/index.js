@@ -1,14 +1,14 @@
 import { combineReducers } from "redux";
 import authReducer from "./authReducer";
 import userReducer from "./userReducer";
-import { reducer as formReducer } from "redux-form";
-import flashMessages from "./flashMessages";
+import flashReducer from "./flashReducer";
+import eventsReducer from "./portal/eventsReducer";
 
 const rootReducer = combineReducers({
-  flashMessages,
-  form: formReducer,
+  flash: flashReducer,
   auth: authReducer,
-  user: userReducer
+  user: userReducer,
+  event: eventsReducer
 });
 
 export default rootReducer;

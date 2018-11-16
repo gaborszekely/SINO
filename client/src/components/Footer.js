@@ -9,7 +9,10 @@ const Footer = props => {
         </div>
         <div className="footer-children">
           <p>
-            Powered by <a href="http://www.google.com">Reactive Web Design</a>
+            Powered by{" "}
+            <a href="http://www.google.com" className="link smallLink">
+              Reactive Web Design
+            </a>
           </p>
         </div>
       </div>

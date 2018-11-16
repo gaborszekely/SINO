@@ -8,26 +8,14 @@ const passportLogin = passport.authenticate("local", { session: false });
 const passportVerify = passport.authenticate("jwt", { session: false });
 
 // JWT token generation/validation
-// signToken = user => {
-//   const isAdmin = user._id === 12345 ? true : false;
-//   return jwt.sign(
-//     {
-//       iss: "Sino Medical",
-//       sub: user._id,
-//       // name: user.fullName || "Unknown",
-//       // admin: isAdmin || false,
-//       iat: new Date().getTime(), // Current Time
-//       exp: new Date().setDate(new Date().getDate() + 1)
-//     },
-//     config.JWT_SECRET
-//   );
-// };
-
 signToken = user => {
+  const isAdmin = user._id == "5beaf724b36e070884ae7b6e" ? true : false;
   return jwt.sign(
     {
       iss: "Sino Medical",
       sub: user._id,
+      name: user.fullName || "Unknown",
+      admin: isAdmin || false,
       iat: new Date().getTime(), // Current Time
       exp: new Date().setDate(new Date().getDate() + 1)
     },
@@ -39,10 +27,8 @@ signToken = user => {
 // @desc      Register New User
 // @access    Public
 router.post("/register", (req, res) => {
-  // CHECK FOR EXISTING USER
-  const query = {
-    personal: { email: req.body.personal.email }
-  };
+  // Check for existing user
+  const query = { "personal.email": req.body.personal.email };
   UserModel.findOne(query, (err, user) => {
     if (err) throw err;
     if (user) {
@@ -50,7 +36,6 @@ router.post("/register", (req, res) => {
     }
   });
 
-  // ADD USER TO DB
   const newUser = new UserModel(req.body);
   newUser
     .save()
@@ -78,9 +63,9 @@ router.post("/login", passportLogin, (req, res) => {
 router.post("/validate", async (req, res) => {
   try {
     if (!req.body.email) {
-      res.status(200).json({ message: "Invalid body" });
+      res.status(500).json({ message: "Invalid body" });
     } else {
-      let users = await UserModel.find({ email: req.body.email });
+      let users = await UserModel.find({ "personal.email": req.body.email });
       res.status(200).json({ users: users.length });
     }
   } catch (err) {
@@ -135,37 +120,6 @@ router.put("/update/:id", passportVerify, (req, res) => {
     { new: true }
   ).then(resp => res.status(200).json(resp));
   // let newUser = await UserModel.findOneAndReplace(
-  //   query,
-  //   {
-  //     name: {
-  //       firstName: req.body.name_first,
-  //       lastName: req.body.name_last
-  //     },
-  //     email: req.body.email,
-  //     address: {
-  //       street: req.body.address_street,
-  //       unit: req.body.address_unit,
-  //       city: req.body.address_city,
-  //       state: req.body.address_state,
-  //       zip: req.body.address_zip,
-  //       country: req.body.address_country
-  //     },
-  //     phone: req.body.phone,
-  //     school: req.body.school,
-  //     edu_status: req.body.edu_status,
-  //     graduation: {
-  //       month: req.body.grad_month,
-  //       year: req.body.grad_year
-  //     }
-  //   },
-  //   {
-  //     returnNewDocument: true
-  //   }
-  // );
-  //   res.status(200).json(newUser);
-  // } catch (error) {
-  //   res.status(500).json({ error });
-  // }
 });
 
 module.exports = router;

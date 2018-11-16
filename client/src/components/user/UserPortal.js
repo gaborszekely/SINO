@@ -76,8 +76,9 @@ class UserPortal extends PureComponent {
   };
 
   render() {
+    if (!this.props.userId) this.props.history.push("/user/login");
     return (
-      <div style={{ margin: "2em" }}>
+      <div className="topMargin leftMargin">
         <h2>User Portal</h2>
         <p>You have reached the User Portal.</p>
         <NavLink to="/user/password">Change Password</NavLink>

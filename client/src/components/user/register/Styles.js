@@ -59,6 +59,10 @@ export default styled.div`
     margin-bottom: 1.5em;
   }
 
+  h3 {
+    margin-left: 20px;
+  }
+
   & > div {
     text-align: center;
   }
@@ -80,12 +84,13 @@ export default styled.div`
 
   form {
     width: 50vw;
-    margin: 10px auto;
+    margin: 25px auto;
     border: 1px solid #ccc;
-    padding: 20px;
+    padding: 10px 30px 30px 30px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
     position: relative;
+    text-align: left;
 
     .loading {
       text-align: center;
@@ -114,13 +119,14 @@ export default styled.div`
         padding: 0 0.5em;
         font-size: 0.9em;
         font-weight: 600;
+        font-family: "Open Sans Condensed";
       }
 
       & > div {
         display: flex;
         flex-flow: row nowrap;
         line-height: 2em;
-        margin: 5px;
+        margin-bottom: 5px;
         position: relative;
         & > label {
           color: #333;
@@ -192,7 +198,7 @@ export default styled.div`
       position: relative;
       & > label {
         color: #333;
-        width: 33%;
+        width: 25%;
         min-width: 60px;
         font-size: 1em;
         line-height: 32px;
