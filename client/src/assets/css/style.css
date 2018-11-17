@@ -759,6 +759,11 @@ header #inner-box .button:hover {
   text-align: center;
 }
 
+.loaderIcon {
+  height: 20px;
+  width: auto;
+}
+
 /*
  * TABS
  *

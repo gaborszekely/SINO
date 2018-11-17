@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
   getEvents,
-  editEvent,
-  deleteEvent,
-  completeEvent,
+  editUserEvent,
+  removeUserEvent,
+  completeUserEvent,
   markImportant
 } from "../../actions/portal/eventActions";
 import SingleEvent from "./SingleEvent";
@@ -44,7 +44,6 @@ class Events extends PureComponent {
     const { events } = this.props.events;
     const { search } = this.state;
     const { user } = this.props;
-    const { userEvents } = this.props.userEvents;
     return (
       <div>
         <div className="portalEvents">
@@ -79,18 +78,15 @@ class Events extends PureComponent {
           <div id="user_events" className="tabcontent">
             <div className="userEvents">
               {(typeof user.events === "undefined" ||
-                user.events.length === 0) &&
-                userEvents.length === 0 && (
-                  <p>
-                    <i>Please add some events!</i>
-                  </p>
-                )}
+                user.events.length === 0) && (
+                <p>
+                  <i>Please add some events!</i>
+                </p>
+              )}
               <ul>
                 {typeof user.events !== "undefined" &&
                   events
-                    .filter(item =>
-                      [...user.events, ...userEvents].includes(item._id)
-                    )
+                    .filter(item => user.events.includes(item._id))
                     .map(item => (
                       <SingleUserEvent
                         key={item._id}
@@ -117,7 +113,9 @@ class Events extends PureComponent {
                 <div className="list">
                   <ul>
                     {typeof events !== "undefined" &&
+                      typeof user.events !== "undefined" &&
                       events
+                        .filter(item => !user.events.includes(item._id))
                         .filter(item =>
                           item.name.toLowerCase().includes(search.toLowerCase())
                         )
@@ -162,23 +160,22 @@ class Events extends PureComponent {
 
 Event.propTypes = {
   getEvents: PropTypes.func.isRequired,
-  filterEvents: PropTypes.func.isRequired,
-  user: PropTypes.string.isRequired,
+  user: PropTypes.object.isRequired,
   events: PropTypes.array.isRequired
 };
+
 const mapStateToProps = state => ({
   user: state.user.user,
-  events: state.event,
-  userEvents: state.event
+  events: state.event
 });
 
 export default connect(
   mapStateToProps,
   {
     getEvents,
-    editEvent,
-    deleteEvent,
-    completeEvent,
+    editUserEvent,
+    removeUserEvent,
+    completeUserEvent,
     markImportant
   }
 )(Events);

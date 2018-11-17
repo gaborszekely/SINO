@@ -1,33 +1,18 @@
 const express = require("express");
 const router = express.Router();
-const UserModel = require("../../models/user-model");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const config = require("../../config");
-const passportLogin = passport.authenticate("local", { session: false });
 const passportVerify = passport.authenticate("jwt", { session: false });
+
+// Mongoose Models
+const UserModel = require("../../models/user-model");
 const EventModel = require("../../models/portal/event-model");
 
-// JWT token generation/validation
-signToken = user => {
-  const isAdmin = user._id == "5beaf724b36e070884ae7b6e" ? true : false;
-  return jwt.sign(
-    {
-      iss: "Sino Medical",
-      sub: user._id,
-      name: user.fullName || "Unknown",
-      admin: isAdmin || false,
-      iat: new Date().getTime(), // Current Time
-      exp: new Date().setDate(new Date().getDate() + 1)
-    },
-    config.JWT_SECRET
-  );
-};
-
-// @route     POST api/portal/addGlobalEvent
+// @route     POST api/portal/events/global/get
 // @desc      Login Page
 // @access    Public
-router.get("/getGlobalEvents", async (req, res) => {
+router.get("/events/global/get", async (req, res) => {
   try {
     let events = await EventModel.find({});
     res.status(200).json(events);
@@ -39,7 +24,7 @@ router.get("/getGlobalEvents", async (req, res) => {
 // @route     POST api/portal/addGlobalEvent
 // @desc      Login Page
 // @access    Public
-router.post("/addGlobalEvent", (req, res) => {
+router.post("/events/global/add", (req, res) => {
   let model = new EventModel(req.body);
   model
     .save()
@@ -47,10 +32,10 @@ router.post("/addGlobalEvent", (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
-// @route     POST api/portal/addGlobalEvent
+// @route     POST api/portal/events/global/remove/:id
 // @desc      Login Page
 // @access    Private
-router.delete("/removeGlobalEvent/:id", async (req, res) => {
+router.delete("/events/global/remove/:id", async (req, res) => {
   try {
     let deleted = await EventModel.findByIdAndRemove(req.params.id);
     res.status(200).json(deleted);
@@ -59,24 +44,52 @@ router.delete("/removeGlobalEvent/:id", async (req, res) => {
   }
 });
 
-// 5bec455840305719bcd9425b
-
-// @route     POST api/portal/addUserEvent
+// @route     POST api/portal/events/user/add
 // @desc      Login Page
 // @access    Public
-router.post("/addUserEvent", async (req, res) => {
+router.post("/events/user/add", passportVerify, async (req, res) => {
+  // Extract userId from Bearer token
+  const tokenUserId = jwt.decode(req.headers.authorization.split(" ")[1]).sub;
   try {
     const updates = {
       $addToSet: {
-        "portal.events": req.body.eventId
+        "portal.events": Object.getOwnPropertyNames(req.body)[0]
       }
     };
     const options = {
       new: true,
-      fields: { "portal.events": 1 },
+      fields: { "portal.events": 1 }
     };
     let update = await UserModel.findByIdAndUpdate(
-      req.body.userId,
+      tokenUserId,
+      updates,
+      options
+    );
+    res.status(201).json(update);
+  } catch (err) {
+    console.error(err.stack);
+    res.status(500).json(err);
+  }
+});
+
+// @route     POST api/portal/events/user/remove
+// @desc      Login Page
+// @access    Public
+router.delete("/events/user/remove/:id", passportVerify, async (req, res) => {
+  // Check to make sure req.body.userId and userId in the Bearer token match.
+  const tokenUserId = jwt.decode(req.headers.authorization.split(" ")[1]).sub;
+  try {
+    const updates = {
+      $pull: {
+        "portal.events": req.params.id
+      }
+    };
+    const options = {
+      new: true,
+      fields: { "portal.events": 1 }
+    };
+    let update = await UserModel.findByIdAndUpdate(
+      tokenUserId,
       updates,
       options
     );

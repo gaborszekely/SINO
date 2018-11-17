@@ -3,15 +3,13 @@ import {
   MARK_IMPORTANT,
   ADD_EVENT,
   EDIT_EVENT,
-  DELETE_EVENT,
+  REMOVE_EVENT,
   GET_EVENTS,
   ITEMS_LOADING
 } from "../../actions/types";
 
 let initialState = {
-  loading: false,
   events: [],
-  userEvents: [],
   userCustomEvents: []
 };
 
@@ -20,26 +18,7 @@ export default function events(state = initialState, action) {
     case GET_EVENTS:
       return {
         ...state,
-        loading: false,
         events: action.payload
-      };
-    // case SET_USER_EVENTS:
-    //   return {
-    //     ...state,
-    //     loading: false,
-    //     userEvents: action.payload.events,
-    //     userCustomEvents: action.payload.userEvents
-    //   };
-    case ADD_EVENT:
-      return {
-        ...state,
-        userEvents: action.payload
-      };
-
-    case DELETE_EVENT:
-      return {
-        ...state,
-        events: state.events.filter(item => item.id !== action.id)
       };
 
     // NOTE - COMPLETE!
@@ -68,12 +47,6 @@ export default function events(state = initialState, action) {
             ? Object.assign({}, item, { important: !item.important })
             : item
         )
-      };
-
-    case ITEMS_LOADING:
-      return {
-        ...state,
-        loading: true
       };
 
     default:

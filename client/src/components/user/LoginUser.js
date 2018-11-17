@@ -56,7 +56,7 @@ class LoginUser extends Component {
       <div className="topMargin centered">
         <h2>Login User</h2>
         {this.props.flashMessage.length > 0 && (
-          <div className="flashMessage">{this.props.flashMessage}</div>
+          <center><div className="flashMessage">{this.props.flashMessage}</div></center>
         )}
 
         <div className="Xlogin-container">

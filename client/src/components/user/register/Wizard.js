@@ -62,7 +62,7 @@ class Wizard extends Component {
         onSubmit={this.handleSubmit}
       >
         {({ handleSubmit, submitting, values }) => (
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} values={values}>
             {activePage}
             <div className="buttons">
               {page > 0 && (

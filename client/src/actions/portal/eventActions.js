@@ -4,56 +4,99 @@ import {
   MARK_IMPORTANT,
   ADD_EVENT,
   EDIT_EVENT,
-  DELETE_EVENT,
-  GET_EVENTS,
-  ITEMS_LOADING
+  REMOVE_EVENT,
+  GET_EVENTS
 } from "../types";
 import { addFlashMessage } from "../flashActions";
+import { setItemsLoading } from "../../utils/loading";
 
 // GET EVENTS
 export const getEvents = () => dispatch => {
-  // dispatch(setItemsLoading());
+  dispatch(setItemsLoading());
   axios
-    .get(`/api/portal/getGlobalEvents`)
-    .then(res => dispatch({ type: GET_EVENTS, payload: res.data }));
-};
-
-// ADD EVENT
-export const addUserEvent = (eventId, userId) => dispatch => {
-  const data = { eventId, userId };
-  axios
-    .post("/api/portal/addUserEvent", data)
+    .get(`/api/portal/events/global/get`)
     .then(res => {
-      console.log(res.data);
-      dispatch(addFlashMessage("Success! Event has been added."));
-      dispatch({
-        type: ADD_EVENT,
-        payload: res.data.portal.events
-      });
+      dispatch({ type: GET_EVENTS, payload: res.data });
+      dispatch(setItemsLoading());
     })
     .catch(err => {
-      dispatch(
-        addFlashMessage("Error - Could not add event. Please try again!")
-      );
+      dispatch(setItemsLoading());
       console.error(err.stack);
     });
 };
 
 // ADD EVENT
-export const addCustomEvent = event => dispatch => {
+export const addUserEvent = eventId => dispatch => {
+  dispatch(setItemsLoading());
   axios
-    .post("/api/...", event)
-    .then(res =>
+    .post("/api/portal/events/user/add", eventId)
+    .then(res => {
+      dispatch(addFlashMessage("Success! Event has been added to your list."));
+      dispatch({
+        type: ADD_EVENT,
+        payload: res.data.portal.events
+      });
+      dispatch(setItemsLoading());
+    })
+    .catch(err => {
+      dispatch(
+        addFlashMessage("Error - Could not add event. Please try again!")
+      );
+      dispatch(setItemsLoading());
+      console.error(err.stack);
+    });
+};
+
+// ADD EVENT
+export const addCustomUserEvent = event => dispatch => {
+  dispatch(setItemsLoading());
+  axios
+    .post("/api/portal/events/user/addCustom", event)
+    .then(res => {
+      dispatch(addFlashMessage("Success! Event has been added to your list."));
       dispatch({
         type: ADD_EVENT,
         payload: res.data
-      })
-    )
-    .catch(err => console.error(err.stack));
+      });
+      dispatch(setItemsLoading());
+    })
+    .catch(err => {
+      dispatch(
+        addFlashMessage("Error - Could not add event. Please try again!")
+      );
+      dispatch(setItemsLoading());
+      console.error(err.stack);
+    });
+};
+
+// DELETE EVENT
+export const removeUserEvent = eventId => dispatch => {
+  dispatch(setItemsLoading());
+  axios
+    .delete(`/api/portal/events/user/remove/${eventId}`)
+    .then(res => {
+      if (res && typeof res === "object" && res !== {}) {
+        dispatch(addFlashMessage("Event has been removed."));
+        dispatch({ type: REMOVE_EVENT, payload: eventId });
+        dispatch(setItemsLoading());
+      } else {
+        dispatch(
+          addFlashMessage("Error - Could not remove event. Please try again!")
+        );
+        dispatch(setItemsLoading());
+      }
+    })
+    .catch(err => {
+      dispatch(
+        addFlashMessage("Error - Could not remove event. Please try again!")
+      );
+      dispatch(setItemsLoading());
+      console.error(err.stack);
+    });
 };
 
 // EDIT EVENT
-export const editEvent = (id, edit) => dispatch => {
+export const editUserEvent = (id, edit) => dispatch => {
   // Make API Call
   dispatch({
     type: EDIT_EVENT,
@@ -63,19 +106,10 @@ export const editEvent = (id, edit) => dispatch => {
 };
 
 // COMPLETE EVENT
-export const completeEvent = id => dispatch => {
+export const completeUserEvent = id => dispatch => {
   // Make API Call
   dispatch({
     type: COMPLETE_EVENT,
-    id
-  });
-};
-
-// DELETE EVENT
-export const deleteEvent = id => dispatch => {
-  // Make API Call
-  dispatch({
-    type: DELETE_EVENT,
     id
   });
 };
@@ -87,10 +121,4 @@ export const markImportant = id => dispatch => {
     type: MARK_IMPORTANT,
     id
   });
-};
-
-export const setItemsLoading = () => {
-  return {
-    type: ITEMS_LOADING
-  };
 };

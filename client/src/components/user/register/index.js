@@ -12,12 +12,6 @@ class ReactFinalForm2 extends Component {
   state = {};
   render() {
     const onSubmit = async values => {
-      // await sleep(300);
-      // // let dob_array = values.dob.trim().split("/");
-      // // let month_dob = dob_array[0].trim();
-      // // let day_dob = dob_array[1].trim();
-      // // let year_dob = dob_array[2].trim();
-      // window.alert(JSON.stringify(values, 0, 2));
       const { addUser } = this.props;
       let grad_ary = values.graduation.trim().split("/");
       const user = {
@@ -96,7 +90,7 @@ class ReactFinalForm2 extends Component {
             please consult the <a href="http://www.google.com">Help Section</a>.
           </p>
           <Wizard initialValues={{}} onSubmit={onSubmit}>
-            <Wizard.Page
+            {/* <Wizard.Page
               validate={values => {
                 const errors = {};
                 if (!values.firstName || values.firstName.length <= 1) {
@@ -170,8 +164,8 @@ class ReactFinalForm2 extends Component {
                 />
                 <Error name="confirm" />
               </div>
-            </Wizard.Page>
-            <Wizard.Page
+            </Wizard.Page> */}
+            {/* <Wizard.Page
               validate={values => {
                 const errors = {};
                 if (!values.gender) errors.gender = "Required";
@@ -208,7 +202,7 @@ class ReactFinalForm2 extends Component {
                 </label>
                 <Error name="gender" />
               </div> */}
-              <div>
+            {/* <div>
                 <label>Gender:</label>
                 <label>
                   <Field
@@ -314,8 +308,8 @@ class ReactFinalForm2 extends Component {
                   </div>
                 </fieldset>
               </div>
-            </Wizard.Page>
-            <Wizard.Page
+            </Wizard.Page> */}
+            {/* <Wizard.Page
               validate={values => {
                 const errors = {};
                 if (!values.school) errors.school = "Required";
@@ -382,52 +376,32 @@ class ReactFinalForm2 extends Component {
                 />
                 <Error name="graduation" />
               </div>
-            </Wizard.Page>
-            <Wizard.Page
-              validate={values => {
-                const errors = {};
-                if (!values.notes) {
-                  errors.notes = "Required";
-                }
-                return errors;
-              }}
-            >
+            </Wizard.Page> */}
+
+            {/* FINAL VERIFICATION PAGE */}
+            <Wizard.Page>
+              <h3>Verify Responses:</h3>
+              <p>
+                <i>
+                  Please double-check your submissions and fix any errors before
+                  submitting:
+                </i>
+              </p>
               <div>
-                <label>Best Stooge?</label>
-                <div>
-                  <label>
-                    <Field
-                      name="stooge"
-                      component="input"
-                      type="radio"
-                      value="larry"
-                    />{" "}
-                    Larry
-                  </label>
-                  <label>
-                    <Field
-                      name="stooge"
-                      component="input"
-                      type="radio"
-                      value="moe"
-                    />{" "}
-                    Moe
-                  </label>
-                  <label>
-                    <Field
-                      name="stooge"
-                      component="input"
-                      type="radio"
-                      value="curly"
-                    />{" "}
-                    Curly
-                  </label>
-                </div>
+                <div>Name:</div>
+                <div>Gabor Szekely</div>
               </div>
               <div>
-                <label>Notes</label>
-                <Field name="notes" component="textarea" placeholder="Notes" />
-                <Error name="notes" />
+                <div>Email:</div>
+                <div>gszekely90@gmail.com</div>
+              </div>
+              <div>
+                <div>DOB:</div>
+                <div>04/03/1990</div>
+              </div>
+              <div>
+                <div>Gender:</div>
+                <div>Male</div>
               </div>
             </Wizard.Page>
           </Wizard>

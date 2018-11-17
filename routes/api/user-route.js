@@ -58,7 +58,7 @@ router.post("/login", passportLogin, (req, res) => {
 });
 
 // @route     POST api/users/validate
-// @desc      Validate Email Address (to see if it's taken when registering)
+// @desc      Validate Email Address (to check availability when registering)
 // @access    Public
 router.post("/validate", async (req, res) => {
   try {
@@ -77,7 +77,6 @@ router.post("/validate", async (req, res) => {
 // @desc      Fetch User Information
 // @access    Private
 router.get("/info/:id", passportVerify, async (req, res) => {
-  // res.status(200).json({ message: "Hi" });
   try {
     let user = await UserModel.findById(req.params.id);
     res.status(200).json(user);
@@ -90,7 +89,6 @@ router.get("/info/:id", passportVerify, async (req, res) => {
 // @desc      Update User Information
 // @access    Private
 router.put("/update/:id", passportVerify, (req, res) => {
-  // res.status(200).json({ message: "Hi" });
   UserModel.findByIdAndUpdate(
     req.params.id,
     {
@@ -118,8 +116,9 @@ router.put("/update/:id", passportVerify, (req, res) => {
       }
     },
     { new: true }
-  ).then(resp => res.status(200).json(resp));
-  // let newUser = await UserModel.findOneAndReplace(
+  )
+    .then(resp => res.status(200).json(resp))
+    .catch(err => res.status(500).json(err));
 });
 
 module.exports = router;
