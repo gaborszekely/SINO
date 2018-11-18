@@ -19,6 +19,7 @@ import Services from "./home/Services";
 import Contact from "./home/Contact";
 import FAQ from "./home/FAQ";
 import LoginUser from "./user/LoginUser";
+import LoginUser1 from "./user/LoginUser1";
 import ChangePassword from "./user/ChangePassword";
 // import UserPortal from "./user/UserPortal";
 import Portal from "./portal/Portal";
@@ -73,6 +74,7 @@ class Main extends Component {
 
               <Route path="/register" exact component={ReactFinalForm2} />
               <Route path="/login" exact component={LoginUser} />
+              <Route path="/login1" exact component={LoginUser1} />
               {/* // render={() =>
               //   this.props.isAuthenticated ? (
               //     <Redirect to="/user/portal" />
