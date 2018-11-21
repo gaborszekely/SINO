@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Offline } from "react-detect-offline";
 import { Popconfirm, message } from "antd";
+import FeatherIcon from "feather-icons-react";
 
 import Logo from "../assets/images/logo/Logo_smaller.png";
 import { logoutUser } from "../actions/authActions";
@@ -18,10 +19,22 @@ class AppNavbar extends Component {
 
   componentDidMount() {
     window.addEventListener("scroll", this.handleScroll);
+    document
+      .querySelector(".more-links")
+      .addEventListener("mouseover", this.moreHover);
+    document
+      .querySelector(".more-links")
+      .addEventListener("mouseout", this.moreUnhover);
   }
 
   componentWillUnmount() {
     window.removeEventListener("scroll", this.handleScroll);
+    document
+      .querySelector(".more-links")
+      .removeEventListener("mouseover", this.moreHover);
+    document
+      .querySelector(".more-links")
+      .addEventListener("mouseout", this.moreUnhover);
   }
 
   handleScroll = () => {
@@ -38,6 +51,30 @@ class AppNavbar extends Component {
       document.getElementById("logo-img").classList.remove("transform");
       document.getElementById("top-row-logo").classList.remove("trans");
     }
+  };
+
+  moreHover = () => {
+    const icon = document.querySelector(".more-icon");
+    icon.classList.add("hovered");
+  };
+
+  moreUnhover = () => {
+    const icon = document.querySelector(".more-icon");
+    icon.classList.remove("hovered");
+  };
+
+  moreLinks = () => {
+    const popdown = document.querySelector(".more-links-popdown");
+    const moreLink = document.querySelector(".more-links");
+    const icon = document.querySelector(".more-icon");
+
+    popdown.classList.contains("opened")
+      ? popdown.classList.remove("opened")
+      : popdown.classList.add("opened");
+
+    icon.classList.contains("opened")
+      ? icon.classList.remove("opened")
+      : icon.classList.add("opened");
   };
 
   render() {
@@ -101,7 +138,7 @@ class AppNavbar extends Component {
                   </NavLink>
                 </li>
               )}
-              <li>
+              <li className="toHide">
                 <NavLink
                   to="/contact"
                   exact
@@ -110,7 +147,7 @@ class AppNavbar extends Component {
                   Contact Us
                 </NavLink>
               </li>
-              <li>
+              <li className="toHide">
                 <NavLink
                   to="/faq"
                   exact
@@ -118,6 +155,38 @@ class AppNavbar extends Component {
                 >
                   FAQ
                 </NavLink>
+              </li>
+              <li className="more-links" onClick={this.moreLinks}>
+                <span className="more-text">More</span>
+                <FeatherIcon icon="chevron-down" className="more-icon" />
+                <div className="more-links-popdown">
+                  <ul>
+                    <li>
+                      <NavLink
+                        to="/contact"
+                        exact
+                        activeStyle={{
+                          color: "#6dacd5",
+                          textDecoration: "none"
+                        }}
+                      >
+                        Contact Us
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        to="/faq"
+                        exact
+                        activeStyle={{
+                          color: "#6dacd5",
+                          textDecoration: "none"
+                        }}
+                      >
+                        FAQ
+                      </NavLink>
+                    </li>
+                  </ul>
+                </div>
               </li>
             </ul>
           </div>

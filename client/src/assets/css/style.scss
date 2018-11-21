@@ -46,7 +46,7 @@ body {
   margin: 0;
   padding: 0;
   // overflow-y: overlay;
-  overflow-x: hidden;
+  // overflow-x: hidden;
   font-size: 0.8em;
 }
 
@@ -90,7 +90,6 @@ li {
 
 li a {
   text-decoration: none;
-  padding: 0 1.5em;
   color: color(navLink);
 }
 
@@ -131,34 +130,26 @@ input {
 
 .flex-wrapper {
   display: flex;
-  flex-flow: row nowrap;
   background-color: rgba(255, 255, 255, 1);
   border-bottom: 1px solid rgb(200, 200, 220);
 
   ul {
-    overflow: hidden;
+    margin: auto;
   }
 
   li {
     float: left;
+    margin-right: 3.5em;
+    display: flex;
+  }
 
-    // & a {
-    //   display: block;
-    //   text-decoration: none;
-    //   text-align: center;
-    //   padding: 1em 1.5em;
-    //   color: color(navLink);
-    // }
-
-    // & a:hover {
-    //   color: color(navLinkHover);
-    // }
+  li:last-of-type {
+    margin-right: 0;
   }
 }
 
 .top-row-logo {
-  flex: 1;
-  padding: .8em 0;
+  padding: .8em 0px;
   transition: padding 400ms ease;
 }
 
@@ -169,17 +160,100 @@ input {
 }
 
 .top-row-links, .login-links {
-  margin: auto 0;
+  margin: auto;
 }
 
 .top-row-links {
-  flex: 1.5;
-  margin-right: 3.2rem;
+  flex: 1;
+  display: flex;
+  position: relative;
 }
 
 .login-links {
-  float: right;
   margin-right: 4rem;
+}
+
+.more-links {
+  display: none !important;
+  position: relative;
+  transition: all 400ms ease;
+}
+
+.more-text {
+  transition: all 400ms ease;
+  cursor: pointer;
+  
+  &:hover {
+    color: color(navLinkHover);
+    transition: all 400ms ease;
+  }
+}
+
+.more-icon {
+  margin: auto 0;
+  margin-left: .4em;
+  color: #333333;
+  transform: rotate(0deg) translateY(-1px);
+  transform-origin: 42% 42%;
+  transition: all 400ms ease;
+
+  &.hovered {
+    color: #6dacd5;
+    transition: all 400ms ease;
+  }
+
+  &.opened {
+    transform: rotateX(180deg) translateY(-1px);
+    transition: all 400ms ease;
+  }
+}
+
+.more-links-popdown {
+  display: none;
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  transition: all 2000ms ease;
+  // border: 1px solid
+
+  &.opened {
+    display: block;
+    transition: all 2000ms ease;
+  }
+
+  ul {
+    display: block;
+
+    li {
+      float: none;
+      margin: 0;
+      border-bottom: 1px solid rgba(0,0,0,0.3);
+      display: block;
+
+      a {
+        display: inline-block;
+        text-align: center;
+        width: 150px;
+        margin: 0;
+        padding: 1em;
+        
+        cursor: pointer;
+        color: black;
+
+        &:hover {
+          background-color: #efefef;
+          color: color(navLinkHover);
+        }
+      }
+    }
+
+    li:last-of-type {
+      border-bottom: none;
+    }
+  }
 }
 
 .trans {
@@ -1398,99 +1472,27 @@ Message
  *
  *******************************************************************/
 
-// @media(min-width: 1231px) {
-//   #inner-box h1 {
-//     font-size: 60px;
-//     line-height: 80px;
-//   }
-// }
-
-@media(min-width: 1096px) and (max-width: 1230px) {
-  .top-row-links {
-    // flex: 1.5;
-    // justify-content: right;
-    // align-items: center;
-    // margin: auto 0;
-    // text-align: center;
-    // margin-right: 3.2em;
-    font-size: 0.9em;
+ @media(min-width: 700px) and (max-width: 990px) {
+  .more-links {
+    display: initial !important;
   }
 
-  .login-links {
-    // float: right;
-    // margin: auto 0;
-    // text-align: center;
-    // margin-right: 5em;
-    font-size: 0.9em;
+  .toHide {
+    display: none !important;
   }
 }
+
+@media(max-width: 850px) {
+  .logo-img {
+    margin-left: 2rem;
+  }
+}
+
 
 @media(min-width: 961px) and (max-width: 1096px) {
-  .top-row-links {
-    color: red;
-  }
-
-  .login-links {
-    color: red;
-  }
-}
-
-@media(max-width: 960px) {
-  .top-row-links {
-    display: none;
-  }
-
-  .login-links {
-    display: none;
-  }
-
-  .menu-button {
-    display: initial;
-  }
+  //
 }
 
 
 
 // ABOUT US
-
-@media(max-width: 1070px) and (min-width: 961px) {
-  .abContainer {
-    display: flex;
-    width: 80%;
-    margin: 0px auto;
-    justify-content: space-around;
-    padding-bottom: 4rem;
-  }
-
-  .abColumn {
-    margin-right: 2em;
-  }
-
-  .abImage1,
-  .abImage2,
-  .abImage3 {
-    height: 180px;
-    width: auto;
-  }
-}
-
-@media(max-width: 960px) {
-  .abContainer {
-    display: flex;
-    width: 80%;
-    margin: 0px auto;
-    justify-content: space-around;
-    padding-bottom: 4rem;
-  }
-
-  .abColumn {
-    margin-right: 2em;
-  }
-
-  .abImage1,
-  .abImage2,
-  .abImage3 {
-    height: 223px;
-    width: auto;
-  }
-}
