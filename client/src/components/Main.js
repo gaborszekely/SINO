@@ -24,7 +24,7 @@ import ChangePassword from "./user/ChangePassword";
 // import UserPortal from "./user/UserPortal";
 import Portal from "./portal/Portal";
 import Error from "./Error";
-import ReactFinalForm2 from "./user/register";
+import RegistrationForm from "./user/register";
 import MapContainer from "../components/user/Maps";
 import NewMap from "../components/user/MapsNew";
 import GoogleMap from "../components/user/map/GoogleMap";
@@ -53,29 +53,38 @@ class Main extends Component {
         <React.Fragment>
           <ScrollToTop>
             <AppNavbar />
-            <Switch>
-              <Route path="/" exact component={Home} />
-              <Route path="/about" exact component={About} />
-              <Route path="/services" exact component={Services} />
-              <Route path="/contact" exact component={Contact} />
-              <Route path="/faq" exact component={FAQ} />
-              <Route path="/maps" exact component={NewMap} />
-              <Route path="/maps2" exact component={MapContainer} />
-              <Route path="/maps3" exact component={GoogleMap} />
-              <Route
-                path="/user/portal"
-                exact
-                // component={Portal}
-                render={() =>
-                  this.props.isAuthenticated ? <Portal /> : <Redirect to="/" />
-                }
-              />
-              <Route path="/logout" exact render={() => <Redirect to="/" />} />
+            <div className="topMargin">
+              <Switch>
+                <Route path="/" exact component={Home} />
+                <Route path="/about" exact component={About} />
+                <Route path="/services" exact component={Services} />
+                <Route path="/contact" exact component={Contact} />
+                <Route path="/faq" exact component={FAQ} />
+                <Route path="/maps" exact component={NewMap} />
+                <Route path="/maps2" exact component={MapContainer} />
+                <Route path="/maps3" exact component={GoogleMap} />
+                <Route
+                  path="/user/portal"
+                  exact
+                  // component={Portal}
+                  render={() =>
+                    this.props.isAuthenticated ? (
+                      <Portal />
+                    ) : (
+                      <Redirect to="/" />
+                    )
+                  }
+                />
+                <Route
+                  path="/logout"
+                  exact
+                  render={() => <Redirect to="/" />}
+                />
 
-              <Route path="/register" exact component={ReactFinalForm2} />
-              <Route path="/login" exact component={LoginUser} />
-              <Route path="/login1" exact component={LoginUser1} />
-              {/* // render={() =>
+                <Route path="/register" exact component={RegistrationForm} />
+                <Route path="/login" exact component={LoginUser} />
+                <Route path="/login1" exact component={LoginUser1} />
+                {/* // render={() =>
               //   this.props.isAuthenticated ? (
               //     <Redirect to="/user/portal" />
               //   ) : (
@@ -83,21 +92,22 @@ class Main extends Component {
               //   )
               // } */}
 
-              {/* CHANGE PASSWORD */}
-              <Route
-                path="/user/password"
-                exact
-                render={() =>
-                  this.props.isAuthenticated ? (
-                    <ChangePassword />
-                  ) : (
-                    <Redirect to="/login" />
-                  )
-                }
-              />
+                {/* CHANGE PASSWORD */}
+                <Route
+                  path="/user/password"
+                  exact
+                  render={() =>
+                    this.props.isAuthenticated ? (
+                      <ChangePassword />
+                    ) : (
+                      <Redirect to="/login" />
+                    )
+                  }
+                />
 
-              <Route component={Error} />
-            </Switch>
+                <Route component={Error} />
+              </Switch>
+            </div>
             <Footer />
           </ScrollToTop>
         </React.Fragment>

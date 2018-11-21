@@ -8,78 +8,86 @@ import { addUser } from "../../../actions/authActions";
 import Styles from "./Styles";
 import Wizard from "./Wizard";
 
-class ReactFinalForm2 extends Component {
-  state = {};
-  render() {
-    const onSubmit = async values => {
-      const { addUser } = this.props;
-      let grad_ary = values.graduation.trim().split("/");
-      const user = {
-        personal: {
-          name: {
-            firstName: values.firstName,
-            lastName: values.lastName
-          },
-          email: values.email,
-          password: values.password,
-          gender: values.gender,
-          dob: values.dob,
-          phone: values.phone,
-          address: {
-            street: values.street,
-            city: values.city,
-            state: values.state,
-            zip: values.zip,
-            country: values.country
-          }
-        },
-        education: {
-          school: values.school,
-          school_country: values.school_country,
-          edu_status: values.edu_status,
-          edu_type: values.edu_type,
-          graduation: {
-            month: grad_ary[0].trim(),
-            year: grad_ary[1].trim()
-          }
-        }
-      };
-      addUser(user);
-    };
+const Error = ({ name }) => (
+  <Field
+    name={name}
+    subscribe={{ touched: true, error: true }}
+    render={({ meta: { touched, error } }) =>
+      touched && error ? <span>{error}</span> : null
+    }
+  />
+);
 
-    const Error = ({ name }) => (
-      <Field
-        name={name}
-        subscribe={{ touched: true, error: true }}
-        render={({ meta: { touched, error } }) =>
-          touched && error ? <span>{error}</span> : null
-        }
-      />
-    );
-
-    // const required = value => (value ? undefined : "Required");
-
-    const validateEmail = async email => {
-      if (email) {
-        let data = await (await fetch("/api/users/validate", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ email })
-        })).json();
-        if (!email) {
-          return "Required";
-        } else if (email.length < 5) {
-          return "Too short";
-        } else if (data.users > 0) {
-          return "Taken";
-        } else {
-          return undefined;
-        }
+const onSubmit = async values => {
+  const { addUser } = this.props;
+  let grad_ary = values.graduation.trim().split("/");
+  const user = {
+    personal: {
+      name: {
+        firstName: values.firstName,
+        lastName: values.lastName
+      },
+      email: values.email,
+      password: values.password,
+      gender: values.gender,
+      dob: values.dob,
+      phone: values.phone,
+      address: {
+        street: values.street,
+        city: values.city,
+        state: values.state,
+        zip: values.zip,
+        country: values.country
       }
-    };
+    },
+    education: {
+      school: values.school,
+      school_country: values.school_country,
+      edu_status: values.edu_status,
+      edu_type: values.edu_type,
+      graduation: {
+        month: grad_ary[0].trim(),
+        year: grad_ary[1].trim()
+      }
+    }
+  };
+  addUser(user);
+};
 
+const validateEmail = async email => {
+  if (email) {
+    let data = await (await fetch("/api/users/validate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ email })
+    })).json();
+    if (!email) {
+      return "Required";
+    } else if (email.length < 5) {
+      return "Too short";
+    } else if (data.users > 0) {
+      return "Taken";
+    } else {
+      return undefined;
+    }
+  }
+};
+
+class RegistrationForm extends Component {
+  state = {};
+
+  constructor(props) {
+    super(props);
+    this.onStateChange = this.onStateChange.bind(this);
+  }
+
+  onStateChange = values => {
+    this.setState({ data: values });
+  };
+
+  render() {
     return (
       <Styles>
         <div className="topMargin">
@@ -89,8 +97,12 @@ class ReactFinalForm2 extends Component {
             <span className="req">*</span> fields. If you have any questions,
             please consult the <a href="http://www.google.com">Help Section</a>.
           </p>
-          <Wizard initialValues={{}} onSubmit={onSubmit}>
-            {/* <Wizard.Page
+          <Wizard
+            initialValues={{}}
+            onStateChange={this.onStateChange}
+            onSubmit={onSubmit}
+          >
+            <Wizard.Page
               validate={values => {
                 const errors = {};
                 if (!values.firstName || values.firstName.length <= 1) {
@@ -164,7 +176,7 @@ class ReactFinalForm2 extends Component {
                 />
                 <Error name="confirm" />
               </div>
-            </Wizard.Page> */}
+            </Wizard.Page>
             {/* <Wizard.Page
               validate={values => {
                 const errors = {};
@@ -180,29 +192,7 @@ class ReactFinalForm2 extends Component {
               }}
             >
               <h3>Personal Information:</h3>
-              {/* <div>
-                <label>Gender:</label>
-                <label>
-                  <Field
-                    name="gender"
-                    component="input"
-                    type="radio"
-                    value="male"
-                  />
-                  Male
-                </label>
-                <label>
-                  <Field
-                    name="gender"
-                    component="input"
-                    type="radio"
-                    value="female"
-                  />
-                  Female
-                </label>
-                <Error name="gender" />
-              </div> */}
-            {/* <div>
+              <div>
                 <label>Gender:</label>
                 <label>
                   <Field
@@ -229,7 +219,7 @@ class ReactFinalForm2 extends Component {
                     type="radio"
                     value="other"
                   />{" "}
-                  Other
+                  Other / Prefer not to answer
                 </label>
               </div>
               <div>
@@ -380,28 +370,13 @@ class ReactFinalForm2 extends Component {
 
             {/* FINAL VERIFICATION PAGE */}
             <Wizard.Page>
-              <h3>Verify Responses:</h3>
-              <p>
-                <i>
-                  Please double-check your submissions and fix any errors before
-                  submitting:
-                </i>
-              </p>
+              <h3>Verify Responses: </h3>
               <div>
-                <div>Name:</div>
-                <div>Gabor Szekely</div>
-              </div>
-              <div>
-                <div>Email:</div>
-                <div>gszekely90@gmail.com</div>
-              </div>
-              <div>
-                <div>DOB:</div>
-                <div>04/03/1990</div>
-              </div>
-              <div>
-                <div>Gender:</div>
-                <div>Male</div>
+                <p>
+                  <b>Display all previous values here for user verification </b>
+                  <br />
+                  <i>{JSON.stringify(this.state.data, 0, 2)}</i>
+                </p>
               </div>
             </Wizard.Page>
           </Wizard>
@@ -415,11 +390,11 @@ class ReactFinalForm2 extends Component {
   }
 }
 
-ReactFinalForm2.propTypes = {
+RegistrationForm.propTypes = {
   addUser: PropTypes.func.isRequired
 };
 
 export default connect(
   null,
   { addUser }
-)(ReactFinalForm2);
+)(RegistrationForm);

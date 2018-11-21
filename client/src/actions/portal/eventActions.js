@@ -7,8 +7,8 @@ import {
   REMOVE_EVENT,
   GET_EVENTS
 } from "../types";
-import { addFlashMessage } from "../flashActions";
 import { setItemsLoading } from "../../utils/loading";
+import { message } from "antd";
 
 // GET EVENTS
 export const getEvents = () => dispatch => {
@@ -31,7 +31,7 @@ export const addUserEvent = eventId => dispatch => {
   axios
     .post("/api/portal/events/user/add", eventId)
     .then(res => {
-      dispatch(addFlashMessage("Success! Event has been added to your list."));
+      message.success("Event has been added!");
       dispatch({
         type: ADD_EVENT,
         payload: res.data.portal.events
@@ -39,9 +39,7 @@ export const addUserEvent = eventId => dispatch => {
       dispatch(setItemsLoading());
     })
     .catch(err => {
-      dispatch(
-        addFlashMessage("Error - Could not add event. Please try again!")
-      );
+      message.error("Event could not be added - Please try again.");
       dispatch(setItemsLoading());
       console.error(err.stack);
     });
@@ -53,7 +51,7 @@ export const addCustomUserEvent = event => dispatch => {
   axios
     .post("/api/portal/events/user/addCustom", event)
     .then(res => {
-      dispatch(addFlashMessage("Success! Event has been added to your list."));
+      message.success("Event has been added!");
       dispatch({
         type: ADD_EVENT,
         payload: res.data
@@ -61,9 +59,7 @@ export const addCustomUserEvent = event => dispatch => {
       dispatch(setItemsLoading());
     })
     .catch(err => {
-      dispatch(
-        addFlashMessage("Error - Could not add event. Please try again!")
-      );
+      message.error("Event could not be added. Please try again.");
       dispatch(setItemsLoading());
       console.error(err.stack);
     });
@@ -76,20 +72,16 @@ export const removeUserEvent = eventId => dispatch => {
     .delete(`/api/portal/events/user/remove/${eventId}`)
     .then(res => {
       if (res && typeof res === "object" && res !== {}) {
-        dispatch(addFlashMessage("Event has been removed."));
+        message.info("Event has been removed.");
         dispatch({ type: REMOVE_EVENT, payload: eventId });
         dispatch(setItemsLoading());
       } else {
-        dispatch(
-          addFlashMessage("Error - Could not remove event. Please try again!")
-        );
+        message.error("Event could not be removed. Please try again.");
         dispatch(setItemsLoading());
       }
     })
     .catch(err => {
-      dispatch(
-        addFlashMessage("Error - Could not remove event. Please try again!")
-      );
+      message.error("Event could not be removed. Please try again.");
       dispatch(setItemsLoading());
       console.error(err.stack);
     });

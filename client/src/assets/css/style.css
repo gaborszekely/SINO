@@ -1,5 +1,5 @@
 /*
- * SASS LOGIC
+ * SCSS LOGIC
  *
  */
 /*
@@ -9,28 +9,8 @@
 *,
 *::before,
 *::after {
-  -webkit-transition: all 400ms ease;
-  transition: all 400ms ease;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-}
-
-/* FOR LOGIN FORM */
-input:focus,
-select:focus,
-textarea:focus,
-button:focus {
-  outline: none;
-}
-
-/* FOR LOGIN FORM */
-[contenteditable="true"]:focus {
-  outline: none;
-}
-
-html {
-  width: 100%;
-  overflow-y: scroll;
 }
 
 body {
@@ -39,15 +19,15 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  font-size: 0.8em;
 }
 
 h1 {
   font-family: "Montserrat";
-  font-size: 54px;
-  line-height: 65px;
+  font-size: 4.6875em;
+  line-height: 1.167em;
   font-weight: 600;
-  margin-top: 1rem;
-  margin-bottom: 6rem;
+  margin-bottom: 1em;
 }
 
 h2 {
@@ -56,19 +36,19 @@ h2 {
   color: #0075c1;
   font-size: 2.7em;
   font-weight: 600;
-  line-height: 53px;
-  padding-top: 1.2rem;
+  margin-top: 1em;
 }
 
 h2::after {
   content: "";
   position: absolute;
-  top: 2em;
-  right: calc(50% - 25px);
   width: 50px;
-  height: 2px;
+  height: 3px;
+  top: 1.8em;
+  right: 50%;
+  -webkit-transform: translateX(50%);
+          transform: translateX(50%);
   background-color: #c8c8c8;
-  margin: 0px auto;
 }
 
 ul {
@@ -81,19 +61,19 @@ li {
   position: relative;
 }
 
-li a, label {
-  color: #333;
-  display: block;
-}
-
 li a {
   text-decoration: none;
-  text-align: center;
-  padding: 1em 1.2em;
+  padding: 0 1.5em;
+  color: #333;
 }
 
 li a:hover {
   color: #6dacd5;
+}
+
+label {
+  color: #333;
+  display: block;
 }
 
 section {
@@ -129,13 +109,11 @@ input {
       -ms-flex-flow: row nowrap;
           flex-flow: row nowrap;
   background-color: white;
-  width: 100%;
   border-bottom: 1px solid #c8c8dc;
 }
 
 .flex-wrapper ul {
   overflow: hidden;
-  display: inline;
 }
 
 .flex-wrapper li {
@@ -146,55 +124,44 @@ input {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
-  margin: auto 0;
-  padding: 1rem 0 0.8rem 0;
-  height: 100%;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  padding: .8em 0;
+  -webkit-transition: padding 400ms ease;
+  transition: padding 400ms ease;
 }
 
 .logo-img {
-  -webkit-transform: scale(1);
-          transform: scale(1);
-  margin: auto 0;
   margin-left: 3.2rem;
   -webkit-transform-origin: left;
           transform-origin: left;
+  -webkit-transition: -webkit-transform 400ms ease;
+  transition: -webkit-transform 400ms ease;
+  transition: transform 400ms ease;
+  transition: transform 400ms ease, -webkit-transform 400ms ease;
 }
 
 .top-row-links, .login-links {
   margin: auto 0;
-  text-align: center;
 }
 
 .top-row-links {
   -webkit-box-flex: 1.5;
       -ms-flex: 1.5;
           flex: 1.5;
-  -webkit-box-pack: right;
-      -ms-flex-pack: right;
-          justify-content: right;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  margin-right: 3.2em;
+  margin-right: 3.2rem;
 }
 
 .login-links {
   float: right;
-  margin-right: 5em;
+  margin-right: 4rem;
 }
 
 .trans {
-  padding: 0.2rem 0;
+  padding: 0.2em 0;
 }
 
 .transform {
-  -webkit-transform: scale(0.66);
-          transform: scale(0.66);
-  -webkit-transform-origin: left;
-          transform-origin: left;
+  -webkit-transform: scale(0.75);
+          transform: scale(0.75);
 }
 
 .trs {
@@ -219,10 +186,8 @@ header {
   background-repeat: no-repeat;
   background-size: cover;
   background-origin: border-box;
-  background-position-y: 14%;
   text-align: center;
   padding: 0.5em;
-  margin-top: 6rem;
   -webkit-transition: initial;
   transition: initial;
   width: 100%;
@@ -254,10 +219,6 @@ header #inner-box .button:hover {
   background-color: #0082d6;
 }
 
-.navbar {
-  position: relative;
-}
-
 /*
  * BUTTONS
  *
@@ -271,6 +232,8 @@ header #inner-box .button:hover {
   text-transform: uppercase;
   border-radius: 4px;
   cursor: pointer;
+  -webkit-transition: all 400ms ease;
+  transition: all 400ms ease;
 }
 
 .button, .blueButton {
@@ -313,7 +276,7 @@ header #inner-box .button:hover {
   padding: .8em 1.6em .8em 1.4em;
   background-color: #008fe1;
   color: #fff;
-  font-size: 14px;
+  font-size: 1em;
   margin: auto;
   text-align: center;
 }
@@ -342,6 +305,19 @@ header #inner-box .button:hover {
   z-index: 2;
 }
 
+/* FOR LOGIN FORM */
+input:focus,
+select:focus,
+textarea:focus,
+button:focus,
+[contenteditable="true"]:focus {
+  outline: none;
+}
+
+/*
+ * FOOTER
+ *
+ */
 .footer {
   text-align: center;
   margin: auto;
@@ -379,19 +355,23 @@ header #inner-box .button:hover {
 .abContainer {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (minmax(300px, 1fr))[auto-fill];
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  -ms-grid-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 3em;
   width: 75%;
   margin: 0px auto;
-  padding-bottom: 4rem;
+  padding-bottom: 4em;
+}
+
+.abContainer h3 {
+  margin-top: 1em;
 }
 
 .abImage1,
 .abImage2,
 .abImage3 {
-  height: 223px;
-  width: auto;
+  height: auto;
+  width: 100%;
 }
 
 .abImage1,
@@ -413,11 +393,11 @@ header #inner-box .button:hover {
  *
  */
 .topMargin {
-  margin-top: 8rem;
+  margin-top: 6em;
 }
 
 .topExtraMargin {
-  margin-top: 10rem;
+  margin-top: 10em;
 }
 
 .leftMargin {
@@ -455,7 +435,7 @@ header #inner-box .button:hover {
  * LOGIN PAGE - XCEL CLONE
  *
  */
-.Xlogin-container {
+.login-container {
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 1.6fr 1fr;
@@ -465,7 +445,7 @@ header #inner-box .button:hover {
   margin: 0px auto;
 }
 
-.Xlogin-container h3 {
+.login-container h3 {
   margin: 0;
   margin-bottom: 1em;
   font-size: 1.5em;
@@ -473,37 +453,36 @@ header #inner-box .button:hover {
   color: #222;
 }
 
-.Xlogin-box, .Xlogin-info {
+.login-box, .login-info {
   position: relative;
-  margin-top: 3rem;
   padding: 2rem;
   width: 100%;
-  background-color: #f8f8fa;
+  background-color: #f7f8fa;
   -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
           box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
   border-radius: 5px;
 }
 
-.Xlogin-box {
+.login-box {
   min-width: 200px;
   padding: 2rem 4rem;
 }
 
-.Xlogin-box div {
+.login-box div {
   text-align: left;
 }
 
-.Xlogin-info {
+.login-info {
   padding: 2rem;
   color: #222;
   text-align: left;
 }
 
-.Xlogin-info h3 {
+.login-info h3 {
   text-align: center;
 }
 
-.Xlogin-info ul {
+.login-info ul {
   text-align: left;
   list-style-type: circle;
   margin-left: 20px;
@@ -511,11 +490,11 @@ header #inner-box .button:hover {
   font-size: 0.9em;
 }
 
-.Xlogin-info ul li {
+.login-info ul li {
   padding-top: 5px;
 }
 
-.Xlogin-info div {
+.login-info div {
   position: absolute;
   bottom: 40px;
   display: -webkit-box;
@@ -538,31 +517,31 @@ header #inner-box .button:hover {
   margin-left: 2px;
 }
 
-.Xlogin-label {
+.login-label {
   margin-bottom: 10px;
   position: relative;
   margin-left: 2px;
   color: #222;
 }
 
-.Xlogin-text {
+.login-text {
   vertical-align: middle;
   font-size: 0.9em;
 }
 
-.Xlogin-input {
+.login-input {
   width: 100%;
   height: 2.5em;
   padding: 5px;
 }
 
-.XloginLink {
+.loginLink {
   text-align: right;
   margin-right: 5px;
   margin-top: 5px;
 }
 
-.XbuttonContainer {
+.buttonContainer {
   text-align: right;
   -webkit-box-align: right;
       -ms-flex-align: right;
@@ -570,11 +549,11 @@ header #inner-box .button:hover {
   float: right;
 }
 
-.XregLink {
+.regLink {
   margin-right: 5px;
 }
 
-.Xloginpage-button {
+.loginpage-button {
   padding: .8em 1.6em .8em 1.4em;
   background-color: #008fe1;
   color: #fff;
@@ -587,7 +566,7 @@ header #inner-box .button:hover {
   text-decoration: none;
 }
 
-.Xloginpage-button:hover {
+.loginpage-button:hover {
   background-color: #00a0f0;
 }
 
@@ -887,7 +866,7 @@ header #inner-box .button:hover {
 .portalEvents {
   position: relative;
   width: 100%;
-  background-color: #f8f8fa;
+  background-color: #f7f8fa;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
 }
@@ -1418,13 +1397,6 @@ Message
  *                          MEDIA QUERIES
  *
  *******************************************************************/
-@media (min-width: 1231px) {
-  #inner-box h1 {
-    font-size: 70px;
-    line-height: 90px;
-  }
-}
-
 @media (min-width: 1096px) and (max-width: 1230px) {
   .top-row-links {
     font-size: 0.9em;

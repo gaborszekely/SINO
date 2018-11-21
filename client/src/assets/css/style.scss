@@ -1,5 +1,6 @@
-/*
- * SASS LOGIC
+
+ /*
+ * SCSS LOGIC
  *
  */
 
@@ -11,9 +12,9 @@ $colors: (
   navButton: rgb(0, 143, 225),
   navButtonHover: rgb(0, 160, 240),
   navLink: #333,
-  navLinkHover: rgb(109, 172, 213),
+  navLinkHover: #6dacd5,
   opaqueWhite: rgba(255, 255, 255, 0.75),
-  containerGray: rgba(248, 248, 250, 1)
+  containerGray: rgba(247, 248, 250, 1)
 );
 
 @function color($colorName) {
@@ -31,27 +32,13 @@ $colors: (
 *,
 *::before,
 *::after {
-  transition: all 400ms ease;
   box-sizing: border-box;
 }
 
-/* FOR LOGIN FORM */
-input:focus,
-select:focus,
-textarea:focus,
-button:focus {
-  outline: none;
-}
-
-/* FOR LOGIN FORM */
-[contenteditable="true"]:focus {
-  outline: none;
-}
-
-html {
-    width: 100%;
-    overflow-y: scroll;
-}
+// html {
+//     // width: 100%;
+//     // overflow-y: scroll;
+// }
 
 body {
   font-family: "Open Sans";
@@ -60,15 +47,15 @@ body {
   padding: 0;
   // overflow-y: overlay;
   overflow-x: hidden;
+  font-size: 0.8em;
 }
 
 h1 {
   font-family: "Montserrat";
-  font-size: 54px;
-  line-height: 65px;
+  font-size: 4.6875em;
+  line-height: 1.167em;
   font-weight: 600;
-  margin-top: 1rem;
-  margin-bottom: 6rem;
+  margin-bottom: 1em;
   }
 
 h2 {
@@ -77,21 +64,18 @@ h2 {
   color: color(mainBlue);
   font-size: 2.7em;
   font-weight: 600;
-  line-height: 53px;
-  // padding-bottom: 1.5em;
-  padding-top: 1.2rem;
+  margin-top: 1em;
 }
 
 h2::after {
   content: "";
-  // display: inline-block;
   position: absolute;
-  top: 2em;
-  right: calc(50% - 25px);
   width: 50px;
-  height: 2px;
+  height: 3px;
+  top: 1.8em;
+  right: 50%;
+  transform: translateX(50%);
   background-color: rgb(200, 200, 200);
-  margin: 0px auto;
 }
 
 ul {
@@ -104,19 +88,19 @@ li {
   position: relative;
 }
 
-li a, label {
-  color: color(navLink);
-  display: block;
-}
-
 li a {
   text-decoration: none;
-  text-align: center;
-  padding: 1em 1.2em;
+  padding: 0 1.5em;
+  color: color(navLink);
 }
 
 li a:hover {
   color: color(navLinkHover);
+}
+
+label {
+  color: color(navLink);
+  display: block;
 }
 
 section {
@@ -149,59 +133,61 @@ input {
   display: flex;
   flex-flow: row nowrap;
   background-color: rgba(255, 255, 255, 1);
-  width: 100%;
   border-bottom: 1px solid rgb(200, 200, 220);
 
   ul {
     overflow: hidden;
-    display: inline;
   }
 
   li {
     float: left;
+
+    // & a {
+    //   display: block;
+    //   text-decoration: none;
+    //   text-align: center;
+    //   padding: 1em 1.5em;
+    //   color: color(navLink);
+    // }
+
+    // & a:hover {
+    //   color: color(navLinkHover);
+    // }
   }
 }
 
 .top-row-logo {
   flex: 1;
-  margin: auto 0;
-  padding: 1rem 0 0.8rem 0;
-  height: 100%;
-  align-items: center;
-
+  padding: .8em 0;
+  transition: padding 400ms ease;
 }
 
 .logo-img {
-  transform: scale(1);
-  margin: auto 0;
   margin-left: 3.2rem;
   transform-origin: left;
+  transition: transform 400ms ease;
 }
 
 .top-row-links, .login-links {
   margin: auto 0;
-  text-align: center;
 }
 
 .top-row-links {
   flex: 1.5;
-  justify-content: right;
-  align-items: center;
-  margin-right: 3.2em;
+  margin-right: 3.2rem;
 }
 
 .login-links {
   float: right;
-  margin-right: 5em;
+  margin-right: 4rem;
 }
 
 .trans {
-  padding: 0.2rem 0;
+  padding: 0.2em 0;
 }
 
 .transform {
-  transform: scale(0.66);
-  transform-origin: left;
+  transform: scale(0.75);
 }
 
 .trs {
@@ -230,10 +216,9 @@ header {
   background-repeat: no-repeat;
   background-size: cover;
   background-origin: border-box;
-  background-position-y: 14%;
   text-align: center;
   padding: 0.5em;
-  margin-top: 6rem;
+  // margin-top: 5.6em;
   transition: initial;
   width: 100%;
   height: 80vh;
@@ -263,10 +248,6 @@ header {
   }
 }
 
-.navbar {
-  position: relative;
-}
-
 
 
 
@@ -284,6 +265,7 @@ header {
   text-transform: uppercase;
   border-radius: 4px;
   cursor: pointer;
+  transition: all 400ms ease;
 }
 
 .button, .blueButton {
@@ -326,7 +308,8 @@ header {
   padding: .8em 1.6em .8em 1.4em;
   background-color: color(navButton);
   color: #fff;
-  font-size: 14px;
+  // font-size: 14px;
+  font-size: 1em;
   margin: auto;
   text-align: center;
   // vertical-align: middle;
@@ -361,6 +344,22 @@ header {
   background-color: #fff;
   z-index: 2;
 }
+
+/* FOR LOGIN FORM */
+input:focus,
+select:focus,
+textarea:focus,
+button:focus,
+[contenteditable="true"]:focus {
+  outline: none;
+}
+
+
+
+/*
+ * FOOTER
+ *
+ */
 
 .footer {
   text-align: center;
@@ -405,20 +404,23 @@ header {
 
 .abContainer {
   display: grid;
-  // grid-template-columns: 1fr 1fr 1fr;
-  // grid-template-columns: 600px 600px 600px;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: 1fr 1fr 1fr;
+  // grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-gap: 3em;
   width: 75%;
   margin: 0px auto;
-  padding-bottom: 4rem;
+  padding-bottom: 4em;
+
+  h3 {
+    margin-top: 1em;
+  }
 }
 
 .abImage1,
 .abImage2,
 .abImage3 {
-  height: 223px;
-  width: auto;
+  height: auto;
+  width: 100%;
 }
 
 .abImage1,
@@ -441,11 +443,11 @@ header {
  */
 
 .topMargin {
-  margin-top: 8rem;
+  margin-top: 6em;
 }
 
 .topExtraMargin {
-  margin-top: 10rem;
+  margin-top: 10em;
 }
 
 
@@ -484,7 +486,7 @@ header {
  *
  */
 
-.Xlogin-container {
+.login-container {
   display: grid;
   grid-template-columns: 1.6fr 1fr;
   grid-gap: 2em;
@@ -500,9 +502,8 @@ header {
   }
 }
 
-.Xlogin-box, .Xlogin-info {
+.login-box, .login-info {
   position: relative;
-  margin-top: 3rem;
   padding: 2rem;
   width: 100%;
   background-color: color(containerGray);
@@ -511,7 +512,7 @@ header {
   border-radius: 5px;
 }
 
-.Xlogin-box {
+.login-box {
   min-width: 200px;
   padding: 2rem 4rem;
 
@@ -520,7 +521,7 @@ header {
   }
 }
 
-.Xlogin-info {
+.login-info {
   padding: 2rem;
   color: #222;
   text-align: left;
@@ -562,41 +563,41 @@ header {
 }
 
 
-.Xlogin-label {
+.login-label {
   margin-bottom: 10px;
   position: relative;
   margin-left: 2px;
   color: #222;
 }
 
-.Xlogin-text {
+.login-text {
   vertical-align: middle;
   font-size: 0.9em;
 }
 
-.Xlogin-input {
+.login-input {
   width: 100%;
   height: 2.5em;
   padding: 5px;
 }
 
-.XloginLink {
+.loginLink {
   text-align: right;
   margin-right: 5px;
   margin-top: 5px;
 }
 
-.XbuttonContainer {
+.buttonContainer {
   text-align: right;
   align-items: right;
   float: right;
 }
 
-.XregLink {
+.regLink {
   margin-right: 5px;
 }
 
-.Xloginpage-button {
+.loginpage-button {
   padding: .8em 1.6em .8em 1.4em;
   background-color: color(navButton);
   color: #fff;
@@ -610,7 +611,7 @@ header {
   text-decoration: none;
 }
 
-.Xloginpage-button:hover {
+.loginpage-button:hover {
   background-color: color(navButtonHover);
 }
 
@@ -1397,12 +1398,12 @@ Message
  *
  *******************************************************************/
 
-@media(min-width: 1231px) {
-  #inner-box h1 {
-    font-size: 70px;
-    line-height: 90px;
-  }
-}
+// @media(min-width: 1231px) {
+//   #inner-box h1 {
+//     font-size: 60px;
+//     line-height: 80px;
+//   }
+// }
 
 @media(min-width: 1096px) and (max-width: 1230px) {
   .top-row-links {

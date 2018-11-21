@@ -48,6 +48,7 @@ class Wizard extends Component {
     } else {
       this.next(values);
     }
+    this.props.onStateChange(values);
   };
 
   render() {
@@ -64,6 +65,30 @@ class Wizard extends Component {
         {({ handleSubmit, submitting, values }) => (
           <form onSubmit={handleSubmit} values={values}>
             {activePage}
+            {/* {isLastPage &&
+              Object.entries(values)
+                .filter(
+                  item =>
+                    item[0] === "firstName" ||
+                    item[0] === "lastName" ||
+                    item[0] === "email" ||
+                    item[0] === "gender" ||
+                    item[0] === "dob" ||
+                    item[0] === "phone"
+                )
+                .map(value => (
+                  <p key={value}>
+                    <b>
+                      {value[0] === "firstName" && "First Name"}
+                      {value[0] === "lastName" && "Last Name"}
+                      {value[0] === "email" && "Email"}
+                      {value[0] === "gender" && "Notes"}
+                      {value[0] === "dob" && "Date of Birth"}
+                      {value[0] === "phone" && "Phone"}
+                    </b>
+                    : {value[1]}
+                  </p>
+                ))} */}
             <div className="buttons">
               {page > 0 && (
                 <button type="button" onClick={this.previous}>

@@ -3,14 +3,13 @@ import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
+import { message } from "antd";
 
 class LoginUser extends Component {
   state = {
     email: "",
     password: "",
-    remember: false,
-    errors: {},
-    isLoading: false
+    remember: false
   };
 
   componentDidMount() {
@@ -23,6 +22,7 @@ class LoginUser extends Component {
   componentDidUpdate() {
     if (this.props.flashMessage.length > 0) {
       document.getElementById("testBtn").classList.remove("loading");
+      message.success(this.props.flashMessage);
     }
   }
 
@@ -40,10 +40,9 @@ class LoginUser extends Component {
       password: this.state.password
     };
     await loginUser(userInfo);
-    // document.getElementById("testBtn").classList.remove("loading");
     this.setState({ email: "", password: "" });
 
-    // this.props.history.push("/user/portal");
+    this.props.history.push("/user/portal");
     // this.context.router.history.push("/user/portal");
   };
 
@@ -53,49 +52,44 @@ class LoginUser extends Component {
 
   render() {
     return (
-      <div className="topMargin centered">
-        <h2>Login User</h2>
-        {this.props.flashMessage.length > 0 && (
-          <center>
-            <div className="flashMessage">{this.props.flashMessage}</div>
-          </center>
-        )}
+      <div className="topExtraMargin centered">
+        {/* {this.props.flashMessage.length > 0 && this.success} */}
 
-        <div className="Xlogin-container">
-          <div className="Xlogin-box">
+        <div className="login-container">
+          <div className="login-box">
             <h3>Sign-In Here</h3>
             <div>
               <form onSubmit={this.handleSubmit}>
                 <div>
-                  <label className="Xlogin-label">Email:</label>
+                  <label className="login-label">Email:</label>
                   <input
                     name="email"
                     value={this.state.email}
                     onChange={this.handleChange}
                     placeholder="Email Address"
-                    className="Xlogin-input"
+                    className="login-input"
                   />
                   <NavLink
                     to="/user/reset"
-                    className="link smallLink XloginLink"
+                    className="link smallLink loginLink"
                   >
                     Forgot Email Address?
                   </NavLink>
                 </div>
                 <br />
                 <div>
-                  <label className="Xlogin-label">Password:</label>
+                  <label className="login-label">Password:</label>
                   <input
                     name="password"
                     type="password"
                     value={this.state.password}
                     onChange={this.handleChange}
                     placeholder="Password"
-                    className="Xlogin-input"
+                    className="login-input"
                   />
                   <NavLink
                     to="/user/reset"
-                    className="link smallLink XloginLink"
+                    className="link smallLink loginLink"
                   >
                     Forgot Password?
                   </NavLink>
@@ -129,7 +123,7 @@ class LoginUser extends Component {
               </form>
             </div>
           </div>
-          <div className="Xlogin-info">
+          <div className="login-info">
             <h3>Registration</h3>
             <br />
             With a Free Account, you can:
@@ -141,7 +135,7 @@ class LoginUser extends Component {
             </ul>
             <br />
             <div>
-              <NavLink to="/register" className="Xloginpage-button signUpLink">
+              <NavLink to="/register" className="loginpage-button signUpLink">
                 Sign up
               </NavLink>
             </div>

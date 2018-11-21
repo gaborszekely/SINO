@@ -3,6 +3,7 @@ import axios from "axios";
 import jwt from "jsonwebtoken";
 import setAuthorizationToken from "../utils/setAuthorizationToken";
 import { addFlashMessage } from "./flashActions";
+import { message } from "antd";
 
 /*
  * SET CURRENT USER IN REDUCER
@@ -23,20 +24,28 @@ export const setCurrentUser = user => {
 
 export const addUser = userInfo => dispatch => {
   // Update database
-  axios.post("/api/users/register", userInfo).then(res => {
-    // Set token
-    const token = res.data.token;
-    if (typeof Storage !== "undefined") {
-      sessionStorage.setItem("jwt_token", token);
-      setAuthorizationToken(token);
-    }
-    dispatch(setCurrentUser(jwt.decode(token)));
-    dispatch(
-      addFlashMessage(
+  axios
+    .post("/api/users/register", userInfo)
+    .then(res => {
+      // Set token
+      const token = res.data.token;
+      if (typeof Storage !== "undefined") {
+        sessionStorage.setItem("jwt_token", token);
+        setAuthorizationToken(token);
+      }
+      dispatch(setCurrentUser(jwt.decode(token)));
+      message.success(
         "Registration complete! Please confirm your email address."
-      )
+      );
+      // dispatch(
+      //   addFlashMessage(
+      //     "Registration complete! Please confirm your email address."
+      //   )
+      // );
+    })
+    .catch(err =>
+      message.error(`Error - Could not register user. ${JSON.stringify(err)}`)
     );
-  });
 };
 
 /*
@@ -54,22 +63,21 @@ export const loginUser = info => dispatch => {
         setAuthorizationToken(token);
       }
       dispatch(setCurrentUser(jwt.decode(token)));
-      dispatch(addFlashMessage("Success! You are now signed in successfully."));
+      message.success("Success! You are now signed in successfully.");
     })
     .catch(err => {
-      dispatch(addFlashMessage(`Error - Unable to sign in! ${err}`));
+      message.error(`Error - Unable to sign in! ${JSON.stringify(err)}`);
     });
 };
 
 export const logoutUser = () => dispatch => {
-  let r = window.confirm("Are you sure?");
-  if (r) {
-    sessionStorage.clear();
-    // this.props.history.push("/");
-    dispatch({
-      type: SET_CURRENT_USER,
-      payload: {}
-    });
-    dispatch(addFlashMessage("You have been logged out"));
-  }
+  // let r = window.confirm("Are you sure?");
+  // if (r) {
+  sessionStorage.clear();
+  // this.props.history.push("/");
+  dispatch({
+    type: SET_CURRENT_USER,
+    payload: {}
+  });
+  message.success("You have been looged out.");
 };

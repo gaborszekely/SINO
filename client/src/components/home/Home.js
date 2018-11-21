@@ -7,16 +7,19 @@ import medical_img2 from "../../assets/images/medical/medical_img2.jpg";
 import medical_img3 from "../../assets/images/medical/medical_img3.jpg";
 
 class Home extends Component {
-  state = {
-    posY: 0,
-    opacity: 1
-  };
+  state = {};
+
+  constructor(props) {
+    super(props);
+    this.imgRef = React.createRef();
+    this.innerRef = React.createRef();
+  }
 
   componentDidMount() {
     window.addEventListener("scroll", this.parralax);
     window.addEventListener("scroll", this.textParralax);
     window.addEventListener("scroll", this.textFade);
-    console.log(document.getElementById("header-row").style.width);
+    // console.log(document.getElementById("header-row").offsetHeight);
   }
 
   componentWillUnmount() {
@@ -26,36 +29,27 @@ class Home extends Component {
   }
 
   parralax = () => {
-    const scrollTop = window.scrollY;
-    const speed = 0.33;
-    const posY = scrollTop * speed;
-    this.setState({ posY: posY });
+    const scrollTop = window.scrollY * 0.33;
+    this.imgRef.current.style.backgroundPositionY = `${scrollTop}px`;
   };
 
   textParralax = () => {
     const scrollTop = window.scrollY * 0.5;
-    this.setState({ textPosY: scrollTop });
+    this.innerRef.current.style.top = `${scrollTop}px`;
   };
 
   textFade = () => {
     const scrollTop = window.scrollY;
     const opacity = 1 - scrollTop / 700;
-    this.setState({ opacity });
+    this.innerRef.current.style.opacity = opacity;
   };
 
   render() {
     return (
-      <div className="clever">
+      <div>
         {/* MAIN HEADER */}
-        <header
-          style={{ backgroundPositionY: this.state.posY }}
-          className="parralax-bg"
-          id="header-row"
-        >
-          <div
-            style={{ top: this.state.textPosY, opacity: this.state.opacity }}
-            id="inner-box"
-          >
+        <header className="parralax-bg" id="header-row" ref={this.imgRef}>
+          <div id="inner-box" ref={this.innerRef}>
             <h1>
               Providing Quality U.S.
               <br />

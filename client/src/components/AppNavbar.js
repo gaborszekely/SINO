@@ -1,18 +1,19 @@
 import React, { Component } from "react";
-import Logo from "../assets/images/logo/logo.png";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { logoutUser } from "../actions/authActions";
 import { Offline } from "react-detect-offline";
+import { Popconfirm, message } from "antd";
+
+import Logo from "../assets/images/logo/Logo_smaller.png";
+import { logoutUser } from "../actions/authActions";
 import OfflineMessage from "./OfflineMessage";
-// import Icon from "@material-ui/core/Icon";
-// import IconName from "@material-ui/icons/{icon-name-here}";
-// import AccountCircle from "@material-ui/icons/AccountCircle";
 
 class AppNavbar extends Component {
-  state = {
-    navHeight: 50
+  state = {};
+
+  confirm = () => {
+    this.props.logoutUser();
   };
 
   componentDidMount() {
@@ -40,6 +41,8 @@ class AppNavbar extends Component {
   };
 
   render() {
+    const text = "Are you sure you want to log out?";
+    const { isAuthenticated } = this.props;
     return (
       <div className="navWrapper">
         <Offline>
@@ -61,12 +64,20 @@ class AppNavbar extends Component {
           <div className="top-row-links">
             <ul className="navbar">
               <li>
-                <NavLink to="/" exact activeStyle={{ color: "#6dacd5" }}>
+                <NavLink
+                  to="/"
+                  exact
+                  activeStyle={{ color: "#6dacd5", textDecoration: "none" }}
+                >
                   Home
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/about" exact activeStyle={{ color: "#6dacd5" }}>
+                <NavLink
+                  to="/about"
+                  exact
+                  activeStyle={{ color: "#6dacd5", textDecoration: "none" }}
+                >
                   About Us
                 </NavLink>
               </li>
@@ -74,43 +85,51 @@ class AppNavbar extends Component {
                 <NavLink
                   to="/services"
                   exact
-                  activeStyle={{ color: "#6dacd5" }}
+                  activeStyle={{ color: "#6dacd5", textDecoration: "none" }}
                 >
                   Services
                 </NavLink>
               </li>
-              {!this.props.isAuthenticated && (
+              {!isAuthenticated && (
                 <li>
                   <NavLink
                     to="/register"
                     exact
-                    activeStyle={{ color: "#6dacd5" }}
+                    activeStyle={{ color: "#6dacd5", textDecoration: "none" }}
                   >
                     Register
                   </NavLink>
                 </li>
               )}
               <li>
-                <NavLink to="/contact" exact activeStyle={{ color: "#6dacd5" }}>
+                <NavLink
+                  to="/contact"
+                  exact
+                  activeStyle={{ color: "#6dacd5", textDecoration: "none" }}
+                >
                   Contact Us
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/faq" exact activeStyle={{ color: "#6dacd5" }}>
+                <NavLink
+                  to="/faq"
+                  exact
+                  activeStyle={{ color: "#6dacd5", textDecoration: "none" }}
+                >
                   FAQ
                 </NavLink>
               </li>
             </ul>
           </div>
           <div className="login-links">
-            <ul className="navbar">
-              {this.props.isAuthenticated && (
+            <ul>
+              {isAuthenticated && (
                 <React.Fragment>
                   <li>
                     <NavLink
                       to="/user/portal"
                       exact
-                      activeStyle={{ color: "#6dacd5" }}
+                      activeStyle={{ color: "#6dacd5", textDecoration: "none" }}
                     >
                       User Portal
                     </NavLink>
@@ -119,24 +138,32 @@ class AppNavbar extends Component {
                     <NavLink
                       to="/logout"
                       exact
-                      activeStyle={{ color: "#6dacd5" }}
-                      onClick={this.props.logoutUser}
+                      activeStyle={{ color: "#6dacd5", textDecoration: "none" }}
                     >
-                      Logout
+                      <Popconfirm
+                        placement="bottomRight"
+                        title={text}
+                        onConfirm={this.confirm}
+                        okText="Yes"
+                        cancelText="No"
+                      >
+                        Logout
+                      </Popconfirm>
                     </NavLink>
                   </li>
                 </React.Fragment>
               )}
-              {!this.props.isAuthenticated && (
-                <React.Fragment>
-                  <li>
-                    <NavLink to="/login" exact className="login-button">
-                      {/* <AccountCircle style={loginIcon} /> */}
-                      {/* <Icon className="login-circle">account_circle</Icon> */}
-                      Login
-                    </NavLink>
-                  </li>
-                </React.Fragment>
+              {!isAuthenticated && (
+                <li>
+                  <NavLink
+                    to="/login"
+                    exact
+                    className="login-button"
+                    activeStyle={{ textDecoration: "none" }}
+                  >
+                    Login
+                  </NavLink>
+                </li>
               )}
             </ul>
           </div>

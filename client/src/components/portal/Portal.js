@@ -13,45 +13,45 @@ class Portal extends Component {
     this.props.getUserInfo(this.props.userId);
   }
 
-  createFlashMessage = message => {
-    if (document.querySelector(".flashTest")) {
-      document
-        .querySelector(".flashTest")
-        .parentNode.removeChild(document.querySelector(".flashTest"));
-    }
+  // createFlashMessage = message => {
+  //   if (document.querySelector(".flashTest")) {
+  //     document
+  //       .querySelector(".flashTest")
+  //       .parentNode.removeChild(document.querySelector(".flashTest"));
+  //   }
 
-    // Parent Flash
-    let newMessage = document.createElement("div");
-    const node = document.createTextNode(message);
-    newMessage.appendChild(node);
+  //   // Parent Flash
+  //   let newMessage = document.createElement("div");
+  //   const node = document.createTextNode(message);
+  //   newMessage.appendChild(node);
 
-    // "X" Button
-    let closeButton = document.createElement("span");
-    const x = document.createTextNode("x");
-    closeButton.appendChild(x);
-    closeButton.onclick = this.hideMessage;
-    closeButton.classList.add("closeButton");
-    newMessage.appendChild(closeButton);
-    newMessage.classList.add("flashTest");
-    const parent = document.getElementById("portal");
-    parent.appendChild(newMessage);
-  };
+  //   // "X" Button
+  //   let closeButton = document.createElement("span");
+  //   const x = document.createTextNode("x");
+  //   closeButton.appendChild(x);
+  //   closeButton.onclick = this.hideMessage;
+  //   closeButton.classList.add("closeButton");
+  //   newMessage.appendChild(closeButton);
+  //   newMessage.classList.add("flashTest");
+  //   const parent = document.getElementById("portal");
+  //   parent.appendChild(newMessage);
+  // };
 
-  hideMessage = () => {
-    const flash = document.querySelector(".flashTest");
-    flash.parentNode.removeChild(flash);
-    // if (flash.classList.contains("hidden")) {
-    //   flash.classList.remove("hiddden");
-    // } else {
-    //   flash.classList.add("hidden");
-    // }
-  };
+  // hideMessage = () => {
+  //   const flash = document.querySelector(".flashTest");
+  //   flash.parentNode.removeChild(flash);
+  //   // if (flash.classList.contains("hidden")) {
+  //   //   flash.classList.remove("hiddden");
+  //   // } else {
+  //   //   flash.classList.add("hidden");
+  //   // }
+  // };
 
   render() {
     return (
       <div className="topExtraMargin" id="portal">
-        {this.props.flashMessage.length > 0 &&
-          this.createFlashMessage(this.props.flashMessage)}
+        {/* {this.props.flashMessage.length > 0 &&
+          this.createFlashMessage(this.props.flashMessage)} */}
         {/* (
           <div className="flashTest">
             {this.props.flashMessage}

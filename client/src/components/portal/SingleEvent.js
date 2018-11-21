@@ -6,6 +6,7 @@ import { addUserEvent } from "../../actions/portal/eventActions";
 import Loader from "../../assets/images/loader_1.gif";
 import store from "../../store";
 import { addFlashMessage } from "../../actions/flashActions";
+import { message } from "antd";
 
 class SingleEvent extends Component {
   state = {
@@ -13,7 +14,8 @@ class SingleEvent extends Component {
   };
   addItem = async eventId => {
     if (this.props.userEvents.includes(eventId)) {
-      store.dispatch(addFlashMessage("Item already exists!"));
+      message.error("Item already exists!");
+      // store.dispatch(addFlashMessage("Item already exists!"));
     } else {
       this.setState({ item: eventId });
       this.props.addUserEvent(eventId);
