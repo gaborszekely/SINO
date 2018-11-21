@@ -63,7 +63,7 @@ export const loginUser = info => dispatch => {
         setAuthorizationToken(token);
       }
       dispatch(setCurrentUser(jwt.decode(token)));
-      message.success("Success! You are now signed in successfully.");
+      dispatch(addFlashMessage("You have been signed in successfully."));
     })
     .catch(err => {
       message.error(`Error - Unable to sign in! ${JSON.stringify(err)}`);

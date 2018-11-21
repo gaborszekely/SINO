@@ -42,7 +42,7 @@ class LoginUser extends Component {
     await loginUser(userInfo);
     this.setState({ email: "", password: "" });
 
-    this.props.history.push("/user/portal");
+    // this.props.history.push("/user/portal");
     // this.context.router.history.push("/user/portal");
   };
 
