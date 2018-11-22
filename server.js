@@ -51,6 +51,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Passport
 app.use(passport.initialize());
 
+// Image uploads folder
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+
 /*
  * ROUTES
  *

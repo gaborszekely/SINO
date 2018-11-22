@@ -1,4 +1,3 @@
-// Dependencies
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
@@ -7,12 +6,7 @@ import { Offline } from "react-detect-offline";
 import { Popconfirm, message } from "antd";
 import FeatherIcon from "feather-icons-react";
 
-// Logo Images
-import logoIcon from "../assets/images/logo/website/icon.png";
-import logoText from "../assets/images/logo/website/text.png";
-import logoSubtext from "../assets/images/logo/website/subtext.png";
-
-// JS files
+import Logo from "../assets/images/logo/Logo_smaller.png";
 import { logoutUser } from "../actions/authActions";
 import OfflineMessage from "./OfflineMessage";
 
@@ -34,25 +28,21 @@ class AppNavbar extends Component {
   handleScroll = () => {
     const scrollTop = window.scrollY;
     if (scrollTop > 50) {
-      // Opacity
+      // Add Opacity
       // document.getElementById("flex-wrapper").classList.add("trs");
-      // Image size
-      document.getElementById("logoIcon").classList.add("transform");
-      document.getElementById("logoText").classList.add("grow");
-      document.getElementById("logoSubtext").classList.add("removed");
-      // Padding
+      // Shrink Image
+      document.getElementById("logo-img").classList.add("transform");
+      // Change padding
       document.getElementById("top-row-logo").classList.add("trans");
     } else {
       // document.getElementById("flex-wrapper").classList.remove("trs");
-      document.getElementById("logoIcon").classList.remove("transform");
-      document.getElementById("logoText").classList.remove("grow");
-      document.getElementById("logoSubtext").classList.remove("removed");
+      document.getElementById("logo-img").classList.remove("transform");
       document.getElementById("top-row-logo").classList.remove("trans");
     }
   };
 
   render() {
-    const logoutText = "Are you sure you want to log out?";
+    const text = "Are you sure you want to log out?";
     const { isAuthenticated } = this.props;
     return (
       <div className="navWrapper">
@@ -63,28 +53,12 @@ class AppNavbar extends Component {
           {/* SINO LOGO @ TOP */}
           <div className="top-row-logo" id="top-row-logo">
             <NavLink to="/" exact>
-              <div className="logoWrapper">
-                <img
-                  className="logoIcon"
-                  id="logoIcon"
-                  src={logoIcon}
-                  alt="Sino Logo"
-                />
-                <div className="logoRightWrapper">
-                  <img
-                    className="logoText"
-                    id="logoText"
-                    src={logoText}
-                    alt="Sino Logo"
-                  />
-                  <img
-                    className="logoSubtext"
-                    id="logoSubtext"
-                    src={logoSubtext}
-                    alt="Sino Logo"
-                  />
-                </div>
-              </div>
+              <img
+                className="logo-img"
+                id="logo-img"
+                src={Logo}
+                alt="Sino Medical Institute"
+              />
             </NavLink>
           </div>
           {/* NAVIGATION BAR */}
@@ -203,7 +177,7 @@ class AppNavbar extends Component {
                             >
                               <Popconfirm
                                 placement="bottomRight"
-                                title={logoutText}
+                                title={text}
                                 onConfirm={this.confirm}
                                 okText="Yes"
                                 cancelText="No"
@@ -258,7 +232,7 @@ class AppNavbar extends Component {
                     >
                       <Popconfirm
                         placement="bottomRight"
-                        title={logoutText}
+                        title={text}
                         onConfirm={this.confirm}
                         okText="Yes"
                         cancelText="No"

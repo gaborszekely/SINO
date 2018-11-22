@@ -1,66 +1,108 @@
 const jwt = require("jsonwebtoken");
+const config = require("../config");
 const UserModel = require("../models/user-model");
 
+// JWT token generation/validation
 signToken = user => {
+  // const isAdmin = user._id == "5beb1603c399c63d40aceb8e" ? true : false;
   return jwt.sign(
     {
       iss: "Sino Medical",
-      sub: newUser.id,
+      sub: user._id,
+      name: user.fullName || "Unknown",
+      admin: user._id === "5beb1603c399c63d40aceb8e" ? true : false,
       iat: new Date().getTime(), // Current Time
       exp: new Date().setDate(new Date().getDate() + 1)
     },
-    process.env.JWT_SECRET
+    config.JWT_SECRET
   );
 };
 
-module.exports = {
-  signUp: async (req, res, next) => {
-    const user = {
-      name: {
-        firstName: req.body.name.firstName,
-        lastName: req.body.name.lastName
-      },
-      email: req.body.email,
-      password: req.body.password, // MUST ENCRYPT FIRST!!!
-      address: {
-        street: req.body.address.street,
-        unit: req.body.address.unit,
-        city: req.body.address.city,
-        state: req.body.address.state,
-        zip: req.body.address.zip,
-        country: req.body.address.country
-      },
-      phone: req.body.phone,
-      school: req.body.school,
-      edu_status: req.body.edu_status,
-      graduation: {
-        month: req.body.graduation.month,
-        year: req.body.graduation.year
-      }
-    };
+exports.uploadImage = (req, res) => {
+  console.log(req.file);
+  // Save file path in MongoDB -> req.file.path
+  res.status(200).send(req.file);
+};
 
-    // CHECK FOR EXISTING USER
-    const query = { email: user.email };
-    const foundUser = await UserModel.findOne(query);
-    if (foundUser) {
+exports.registerUser = (req, res) => {
+  // Check for existing user
+  const query = { "personal.email": req.body.personal.email };
+  UserModel.findOne(query, (err, user) => {
+    if (err) throw err;
+    if (user) {
       return res.status(403).json({ error: "User already exists!" });
     }
+  });
 
-    // ADD USER TO DB
-    const newUser = new UserModel(user);
-    await newUser.save();
-    // Generate token
-    const token = signToken(newUser);
+  const newUser = new UserModel(req.body);
+  newUser
+    .save()
+    .then(() => {
+      const token = signToken(newUser);
+      res.status(201).json({ token });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ error: err });
+    });
+};
 
-    // Respond with token
-    res.status(201).json({ token });
-  },
+exports.loginUser = (req, res) => {
+  const token = signToken(req.user);
+  res.status(200).json({ token });
+};
 
-  signIn: async (req, res, next) => {
-    //
-  },
-
-  secret: async (req, res, next) => {
-    //
+exports.validateEmail = async (req, res) => {
+  try {
+    if (!req.body.email) {
+      res.status(500).json({ message: "Invalid body" });
+    } else {
+      let users = await UserModel.find({ "personal.email": req.body.email });
+      res.status(200).json({ users: users.length });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err });
   }
+};
+
+exports.getUserInfo = async (req, res) => {
+  try {
+    let user = await UserModel.findById(req.params.id);
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+};
+
+exports.updateUser = (req, res) => {
+  UserModel.findByIdAndUpdate(
+    req.params.id,
+    {
+      $set: {
+        name: {
+          firstName: req.body.name_first,
+          lastName: req.body.name_last
+        },
+        email: req.body.email,
+        address: {
+          street: req.body.address_street,
+          unit: req.body.address_unit,
+          city: req.body.address_city,
+          state: req.body.address_state,
+          zip: req.body.address_zip,
+          country: req.body.address_country
+        },
+        phone: req.body.phone,
+        school: req.body.school,
+        edu_status: req.body.edu_status,
+        graduation: {
+          month: req.body.grad_month,
+          year: req.body.grad_year
+        }
+      }
+    },
+    { new: true }
+  )
+    .then(resp => res.status(200).json(resp))
+    .catch(err => res.status(500).json(err));
 };

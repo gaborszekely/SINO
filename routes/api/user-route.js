@@ -1,124 +1,65 @@
 const express = require("express");
 const router = express.Router();
-const UserModel = require("../../models/user-model");
-const jwt = require("jsonwebtoken");
 const passport = require("passport");
-const config = require("../../config");
 const passportLogin = passport.authenticate("local", { session: false });
 const passportVerify = passport.authenticate("jwt", { session: false });
+const multer = require("multer");
 
-// JWT token generation/validation
-signToken = user => {
-  const isAdmin = user._id == "5beb1603c399c63d40aceb8e" ? true : false;
-  return jwt.sign(
-    {
-      iss: "Sino Medical",
-      sub: user._id,
-      name: user.fullName || "Unknown",
-      admin: isAdmin || false,
-      iat: new Date().getTime(), // Current Time
-      exp: new Date().setDate(new Date().getDate() + 1)
-    },
-    config.JWT_SECRET
-  );
+const Controllers = require("../../controllers/user-controller");
+
+// Multer file storage
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, "uploads");
+  },
+  filename: (req, file, callback) => {
+    callback(null, req.body.username + "_" + file.originalname);
+  }
+});
+
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+    cb(null, true);
+  } else {
+    // cb(new Error("Wrong image format!"), false);
+    cb(null, false);
+  }
 };
+
+const upload = multer({
+  storage,
+  limits: { fileSize: 1024 * 1024 * 5 },
+  fileFilter
+});
+
+// @route     POST api/users/img
+// @desc      Test Image Upload
+// @access    Public
+router.post("/img", upload.single("profile"), Controllers.uploadImage);
 
 // @route     POST api/users/register
 // @desc      Register New User
 // @access    Public
-router.post("/register", (req, res) => {
-  // Check for existing user
-  const query = { "personal.email": req.body.personal.email };
-  UserModel.findOne(query, (err, user) => {
-    if (err) throw err;
-    if (user) {
-      return res.status(403).json({ error: "User already exists!" });
-    }
-  });
-
-  const newUser = new UserModel(req.body);
-  newUser
-    .save()
-    .then(() => {
-      const token = signToken(newUser);
-      res.status(201).json({ token });
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json({ error: err });
-    });
-});
+router.post("/register", Controllers.registerUser);
 
 // @route     POST api/users/login
 // @desc      Login Page
 // @access    Private
-router.post("/login", passportLogin, (req, res) => {
-  const token = signToken(req.user);
-  res.status(200).json({ token });
-});
+router.post("/login", passportLogin, Controllers.loginUser);
 
 // @route     POST api/users/validate
 // @desc      Validate Email Address (to check availability when registering)
 // @access    Public
-router.post("/validate", async (req, res) => {
-  try {
-    if (!req.body.email) {
-      res.status(500).json({ message: "Invalid body" });
-    } else {
-      let users = await UserModel.find({ "personal.email": req.body.email });
-      res.status(200).json({ users: users.length });
-    }
-  } catch (err) {
-    res.status(500).json({ error: err });
-  }
-});
+router.post("/validate", Controllers.validateEmail);
 
 // @route     GET api/users/:id
 // @desc      Fetch User Information
 // @access    Private
-router.get("/info/:id", passportVerify, async (req, res) => {
-  try {
-    let user = await UserModel.findById(req.params.id);
-    res.status(200).json(user);
-  } catch (err) {
-    res.status(500).json({ error: err });
-  }
-});
+router.get("/info/:id", passportVerify, Controllers.getUserInfo);
 
 // @route     PUT api/users/update
 // @desc      Update User Information
 // @access    Private
-router.put("/update/:id", passportVerify, (req, res) => {
-  UserModel.findByIdAndUpdate(
-    req.params.id,
-    {
-      $set: {
-        name: {
-          firstName: req.body.name_first,
-          lastName: req.body.name_last
-        },
-        email: req.body.email,
-        address: {
-          street: req.body.address_street,
-          unit: req.body.address_unit,
-          city: req.body.address_city,
-          state: req.body.address_state,
-          zip: req.body.address_zip,
-          country: req.body.address_country
-        },
-        phone: req.body.phone,
-        school: req.body.school,
-        edu_status: req.body.edu_status,
-        graduation: {
-          month: req.body.grad_month,
-          year: req.body.grad_year
-        }
-      }
-    },
-    { new: true }
-  )
-    .then(resp => res.status(200).json(resp))
-    .catch(err => res.status(500).json(err));
-});
+router.put("/update/:id", passportVerify, Controllers.updateUser);
 
 module.exports = router;

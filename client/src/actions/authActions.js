@@ -79,5 +79,5 @@ export const logoutUser = () => dispatch => {
     type: SET_CURRENT_USER,
     payload: {}
   });
-  message.success("You have been looged out.");
+  message.success("You have been logged out successfully.");
 };

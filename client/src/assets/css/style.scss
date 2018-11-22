@@ -153,10 +153,48 @@ input {
   transition: padding 400ms ease;
 }
 
-.logo-img {
+// .logo-img {
+//   margin-left: 3.2rem;
+//   transform-origin: left;
+//   transition: transform 400ms ease;
+// }
+
+.logoWrapper {
+  display: flex;
   margin-left: 3.2rem;
-  transform-origin: left;
+}
+
+.logoRightWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.logoIcon {
   transition: transform 400ms ease;
+  transform-origin: left;
+
+  &.transform {
+    transform: scale(0.66);
+  }
+}
+
+.logoText {
+  transition: transform 400ms ease;
+
+  &.grow {
+    transform: translateY(10px) translateX(-20px);
+    transition: transform 400ms ease;
+  }
+}
+
+.logoSubtext {
+  display: initial;
+  transition: display 400ms ease;
+
+  &.removed {
+    display: none;
+    transition: display 400ms ease;
+  }
 }
 
 .top-row-links, .login-links {
@@ -177,11 +215,34 @@ input {
   display: none !important;
   position: relative;
   transition: all 400ms ease;
+
+  &:hover .more-links-popdown {
+    display: initial;
+  }
 }
 
 .more-text {
+  position: relative;
   transition: all 400ms ease;
   cursor: pointer;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -16px;
+    height: 10px;
+    width: 10px;
+    background-color: #666;
+    transform: translateY(-25%);
+    transition: all 400ms ease;
+    clip-path: polygon(0 0, 50% 50%, 100% 0);
+  }
+
+  &:hover::after {
+    background-color: color(navLinkHover);
+    transition: all 400ms ease;
+  }
   
   &:hover {
     color: color(navLinkHover);
@@ -193,8 +254,8 @@ input {
   margin: auto 0;
   margin-left: .4em;
   color: #333333;
-  transform: rotate(0deg) translateY(-1px);
-  transform-origin: 42% 42%;
+  transform: rotate(0deg) translateY(25%);
+  transform-origin: 67% 67%;
   transition: all 400ms ease;
 
   &.hovered {
@@ -203,7 +264,7 @@ input {
   }
 
   &.opened {
-    transform: rotateX(180deg) translateY(-1px);
+    transform: rotateX(180deg) translateY(25%);
     transition: all 400ms ease;
   }
 }
@@ -211,18 +272,16 @@ input {
 .more-links-popdown {
   display: none;
   position: absolute;
-  top: 40px;
+  bottom: 0px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(100%);
+  padding-top: 20px;
+}
+
+.more-links-popdown-inner {
   background-color: #fff;
   box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-  transition: all 2000ms ease;
-  // border: 1px solid
-
-  &.opened {
-    display: block;
-    transition: all 2000ms ease;
-  }
+  transition: all 2000ms ease; 
 
   ul {
     display: block;
@@ -239,13 +298,13 @@ input {
         width: 150px;
         margin: 0;
         padding: 1em;
-        
         cursor: pointer;
         color: black;
+        transition: background-color 400ms ease;
 
         &:hover {
-          background-color: #efefef;
-          color: color(navLinkHover);
+          background-color: rgb(245,247,248);
+          // color: color(navLinkHover);
         }
       }
     }
@@ -254,6 +313,22 @@ input {
       border-bottom: none;
     }
   }
+}
+
+.more-links-login {
+  display: none !important;
+}
+
+.hamburger {
+  display: flex;
+}
+
+.hamburger-icon {
+  display: none !important;
+  margin: auto 0;
+  margin-right: 4em;
+  stroke: #666;
+  transform: scale(1.8);
 }
 
 .trans {
@@ -1472,7 +1547,7 @@ Message
  *
  *******************************************************************/
 
- @media(min-width: 700px) and (max-width: 990px) {
+ @media (max-width: 990px) {
   .more-links {
     display: initial !important;
   }
@@ -1482,15 +1557,62 @@ Message
   }
 }
 
-@media(max-width: 850px) {
+@media (min-width: 800px) and (max-width: 870px) {
   .logo-img {
-    margin-left: 2rem;
+    margin-left: 1.5rem;
+  }
+
+  .login-links {
+    margin-right: 2rem;
   }
 }
 
 
-@media(min-width: 961px) and (max-width: 1096px) {
-  //
+@media (min-width: 725px) and (max-width: 800px) {
+  .right-buttons, .login-button {
+    display: none !important;
+  }
+
+  .top-row-links {
+    position: absolute;
+    right: 4em;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .more-links-login {
+    display: inline-block !important;
+    text-align: center;
+    width: 150px;
+    margin: 0;
+    padding: 1em;
+    cursor: pointer;
+    color: black;
+    transition: background-color 400ms ease;
+
+    &:hover {
+      background-color: rgb(245,247,248);
+      // color: color(navLinkHover);
+    }
+  }
+    
+}
+
+@media(max-width: 725px) {
+  .hamburger-icon {
+    display: initial !important;
+  }
+
+  .top-row-links, .right-buttons {
+    display: none !important;
+  }
+  // .hamburger-menu-icon {
+  //   display: initial !important;
+  // }
+
+  // .hamburger-menu {
+  //   display: initial !important;
+  // }
 }
 
 
