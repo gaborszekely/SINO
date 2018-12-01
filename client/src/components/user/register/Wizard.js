@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Form } from "react-final-form";
+import { Steps } from "antd";
 
 class Wizard extends Component {
   static propTypes = {
@@ -52,61 +53,57 @@ class Wizard extends Component {
   };
 
   render() {
+    const Step = Steps.Step;
     const { children } = this.props;
     const { page, values } = this.state;
     const activePage = React.Children.toArray(children)[page];
     const isLastPage = page === React.Children.count(children) - 1;
+    const steps = [
+      { title: "Account" },
+      { title: "Personal" },
+      { title: "Education" },
+      { title: "Verify" }
+    ];
     return (
-      <Form
-        initialValues={values}
-        validate={this.validate}
-        onSubmit={this.handleSubmit}
-      >
-        {({ handleSubmit, submitting, values }) => (
-          <form onSubmit={handleSubmit} values={values}>
-            {activePage}
-            {/* {isLastPage &&
-              Object.entries(values)
-                .filter(
-                  item =>
-                    item[0] === "firstName" ||
-                    item[0] === "lastName" ||
-                    item[0] === "email" ||
-                    item[0] === "gender" ||
-                    item[0] === "dob" ||
-                    item[0] === "phone"
-                )
-                .map(value => (
-                  <p key={value}>
-                    <b>
-                      {value[0] === "firstName" && "First Name"}
-                      {value[0] === "lastName" && "Last Name"}
-                      {value[0] === "email" && "Email"}
-                      {value[0] === "gender" && "Notes"}
-                      {value[0] === "dob" && "Date of Birth"}
-                      {value[0] === "phone" && "Phone"}
-                    </b>
-                    : {value[1]}
-                  </p>
-                ))} */}
-            <div className="buttons">
-              {page > 0 && (
-                <button type="button" onClick={this.previous}>
-                  « Previous
-                </button>
-              )}
-              {!isLastPage && <button type="submit">Next »</button>}
-              {isLastPage && (
-                <button type="submit" disabled={submitting}>
-                  Submit
-                </button>
-              )}
-            </div>
+      <React.Fragment>
+        <div className="stepContainer">
+          <Steps size="small" current={this.state.page}>
+            {steps.map(step => (
+              <Step title={step.title} />
+            ))}
+          </Steps>
+        </div>
+        <Form
+          initialValues={values}
+          validate={this.validate}
+          onSubmit={this.handleSubmit}
+        >
+          {({ handleSubmit, submitting, values }) => (
+            <form
+              onSubmit={handleSubmit}
+              values={values}
+              className="wizardForm"
+            >
+              {activePage}
+              <div className="buttons">
+                {page > 0 && (
+                  <button type="button" onClick={this.previous}>
+                    « Previous
+                  </button>
+                )}
+                {!isLastPage && <button type="submit">Next »</button>}
+                {isLastPage && (
+                  <button type="submit" disabled={submitting}>
+                    Submit
+                  </button>
+                )}
+              </div>
 
-            {/* <pre>{JSON.stringify(values, 0, 2)}</pre> */}
-          </form>
-        )}
-      </Form>
+              {/* <pre>{JSON.stringify(values, 0, 2)}</pre> */}
+            </form>
+          )}
+        </Form>
+      </React.Fragment>
     );
   }
 }

@@ -1,16 +1,45 @@
-import { GET_USER_INFO } from "./types";
+import { GET_USER_INFO, UPDATE_USER_INFO } from "./types";
 import axios from "axios";
+import { message } from "antd";
+import { setItemsLoading } from "../utils/loading";
+
+export const subscribeUser = email => dispatch => {
+  dispatch(setItemsLoading());
+  axios
+    .post("/api/users/subscribe", email)
+    .then(res => {
+      message.success("Success! You have been signed up for our mailing list.");
+      dispatch(setItemsLoading());
+    })
+    .catch(err => {
+      message.error(
+        "Oh no! We were unable to sign you up. Please try again later."
+      );
+      console.error(err.stack);
+      dispatch(setItemsLoading());
+    });
+};
 
 export const updateUserInfo = (id, info) => dispatch => {
-  axios.put(`/api/users/update/${id}`, info).then(res => console.log(res));
-  //   dispatch({
-  //     type: UPDATE_USER_INFO,
-  //     payload: res.data
-  //   })
-  // );
+  dispatch(setItemsLoading());
+  axios
+    .put(`/api/users/update/${id}`, info)
+    .then(res => {
+      dispatch({
+        type: UPDATE_USER_INFO,
+        payload: res.data
+      });
+      message.success("Updated user info successfully.");
+      dispatch(setItemsLoading());
+    })
+    .catch(err => {
+      message.error("Could not update user info. Please try again!");
+      dispatch(setItemsLoading());
+    });
 };
 
 export const getUserInfo = id => dispatch => {
+  dispatch(setItemsLoading());
   axios
     .get(`/api/users/info/${id}`)
     .then(res => {
@@ -53,6 +82,11 @@ export const getUserInfo = id => dispatch => {
         type: GET_USER_INFO,
         payload: user
       });
+      dispatch(setItemsLoading());
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      console.log(err);
+      message.error("Unable to fetch user info. Please try again!");
+      dispatch(setItemsLoading());
+    });
 };

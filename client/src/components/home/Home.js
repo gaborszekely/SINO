@@ -1,18 +1,32 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-// import { connect } from "react-redux";
-// import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+
+// JS Files
+import { subscribeUser } from "../../actions/userActions";
+
+// Images
 import medical_img1 from "../../assets/images/medical/medical_img1.jpg";
 import medical_img2 from "../../assets/images/medical/medical_img2.jpg";
 import medical_img3 from "../../assets/images/medical/medical_img3.jpg";
 
+// Icons
+import Twitter from "../icons/Twitter";
+import Facebook from "../icons/Facebook";
+import LinkedIn from "../icons/LinkedIn";
+import Instagram from "../icons/Instagram";
+
 class Home extends Component {
-  state = {};
+  state = {
+    subscribe: ""
+  };
 
   constructor(props) {
     super(props);
     this.imgRef = React.createRef();
     this.innerRef = React.createRef();
+    this.subscribeRef = React.createRef();
   }
 
   componentDidMount() {
@@ -29,12 +43,13 @@ class Home extends Component {
   }
 
   parralax = () => {
+    // const subscribeTop = 380;
     const scrollTop = window.scrollY * 0.33;
     this.imgRef.current.style.backgroundPositionY = `${scrollTop}px`;
   };
 
   textParralax = () => {
-    const scrollTop = window.scrollY * 0.5;
+    const scrollTop = window.scrollY * 0.65;
     this.innerRef.current.style.top = `${scrollTop}px`;
   };
 
@@ -42,6 +57,17 @@ class Home extends Component {
     const scrollTop = window.scrollY;
     const opacity = 1 - scrollTop / 700;
     this.innerRef.current.style.opacity = opacity;
+  };
+
+  handleSubscribe = e => {
+    e.preventDefault();
+    const data = { email: this.state.subscribe };
+    this.props.subscribeUser(data);
+  };
+
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+    console.log(this.state.subscribe);
   };
 
   render() {
@@ -110,11 +136,85 @@ class Home extends Component {
         <section className="mainsection">
           <h2>Contact Us</h2>
         </section>
-        <section>Subscribe</section>
-        <section>Social</section>
+        <section>
+          <div className="subscribeWrapper" ref={this.subscribeRef}>
+            <div className="">
+              <h3>Subscribe</h3>
+              <p className="subscribeText">
+                Sign up to hear from us about specials, events, and sales.
+              </p>
+              <form onSubmit={this.handleSubscribe}>
+                <div className="subscribeFormWrapper">
+                  <input
+                    type="text"
+                    name="subscribe"
+                    onChange={this.handleChange}
+                    value={this.state.subscribe}
+                    placeholder="Enter email address..."
+                    className="subscribeField"
+                  />
+                  <button type="submit" className="button subscribeButton">
+                    Sign Up
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+        <section className="socialMedia">
+          <div className="socialMediaWrapper">
+            <div className="socialIconContainer">
+              <a href="http://www.facebook.com">
+                <Facebook
+                  height="30px"
+                  width="30px"
+                  fill="white"
+                  className="socialIcon"
+                />
+              </a>
+            </div>
+            <div className="socialIconContainer">
+              <a href="http://www.twitter.com">
+                <Twitter
+                  height="30px"
+                  width="30px"
+                  fill="white"
+                  className="socialIcon"
+                />
+              </a>
+            </div>
+            <div className="socialIconContainer">
+              <a href="http://www.linkedin.com">
+                <LinkedIn
+                  height="30px"
+                  width="30px"
+                  fill="white"
+                  className="socialIcon"
+                />
+              </a>
+            </div>
+            <div className="socialIconContainer">
+              <a href="http://www.instagram.com">
+                <Instagram
+                  height="30px"
+                  width="30px"
+                  fill="white"
+                  className="socialIcon"
+                />
+              </a>
+            </div>
+          </div>
+        </section>
       </div>
     );
   }
 }
 
-export default Home;
+Home.propTypes = {
+  subscribeUser: PropTypes.func.isRequired
+};
+
+export default connect(
+  null,
+  { subscribeUser }
+)(Home);

@@ -19,3 +19,8 @@ export const EDIT_EVENT = "EDIT_EVENT";
 export const REMOVE_EVENT = "REMOVE_EVENT";
 export const ITEMS_LOADING = "ITEMS_LOADING";
 export const SEARCH_EVENTS = "SEARCH_EVENTS";
+
+// CHAT
+export const SEND_MESSAGE = "SEND_MESSAGE";
+export const SEND_PM = "SEND_PM";
+export const GET_MESSAGES = "GET_MESSAGES";

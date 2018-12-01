@@ -23,7 +23,17 @@ class UserPortal extends PureComponent {
     grad_year: ""
   };
 
+  // componentDidUpdate(/*prevProps, prevState*/) {
+  //   if (!this.props.user.isLogged && !this.props.user.authenticating) {
+  //     this.context.router.history.push('/')
+  //   }
+  // }
+
   componentDidMount() {
+    if (!this.props.isAUthenticated) {
+      this.context.router.history.push("/");
+    }
+
     const { getUserInfo } = this.props;
     getUserInfo(this.props.userId);
   }

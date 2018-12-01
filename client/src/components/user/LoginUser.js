@@ -4,6 +4,8 @@ import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 import { message } from "antd";
+import store from "../../store";
+import { addFlashMessage } from "../../actions/flashActions";
 
 class LoginUser extends Component {
   state = {
@@ -20,30 +22,29 @@ class LoginUser extends Component {
   }
 
   componentDidUpdate() {
+    const loginButton = document.getElementById("testBtn");
     if (this.props.flashMessage.length > 0) {
-      document.getElementById("testBtn").classList.remove("loading");
+      loginButton.classList.remove("loading");
       message.success(this.props.flashMessage);
+      store.dispatch(addFlashMessage(""));
     }
   }
 
   handleSubmit = async e => {
     e.preventDefault();
+
     // Set saved login
     document.getElementById("testBtn").classList.add("loading");
     if (this.state.remember && this.state.email.length > 0) {
       localStorage.setItem("saved_login", this.state.email);
     }
 
-    const { loginUser } = this.props;
     const userInfo = {
       email: this.state.email,
       password: this.state.password
     };
-    await loginUser(userInfo);
+    await this.props.loginUser(userInfo);
     this.setState({ email: "", password: "" });
-
-    // this.props.history.push("/user/portal");
-    // this.context.router.history.push("/user/portal");
   };
 
   handleChange = e => {
@@ -104,7 +105,7 @@ class LoginUser extends Component {
                   />
                   <span
                     className="rememberText"
-                    style={{ marginBottom: "50px" }}
+                    style={{ marginBottom: "50px", marginLeft: "1em" }}
                   >
                     Remember Username?
                   </span>
@@ -113,7 +114,9 @@ class LoginUser extends Component {
                 <br />
                 <br />
                 <div className="btn" id="testBtn">
-                  <button type="submit">Log In</button>
+                  <button type="submit">
+                    <span>Log In</span>
+                  </button>
                 </div>
                 {/* <div className="XbuttonContainer">
                   <button type="submit" className="Xloginpage-button">

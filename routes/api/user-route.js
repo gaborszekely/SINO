@@ -47,11 +47,6 @@ router.post("/register", Controllers.registerUser);
 // @access    Private
 router.post("/login", passportLogin, Controllers.loginUser);
 
-// @route     POST api/users/validate
-// @desc      Validate Email Address (to check availability when registering)
-// @access    Public
-router.post("/validate", Controllers.validateEmail);
-
 // @route     GET api/users/:id
 // @desc      Fetch User Information
 // @access    Private
@@ -61,5 +56,15 @@ router.get("/info/:id", passportVerify, Controllers.getUserInfo);
 // @desc      Update User Information
 // @access    Private
 router.put("/update/:id", passportVerify, Controllers.updateUser);
+
+// @route     POST api/users/validate
+// @desc      Validate Email Address (to check availability when registering)
+// @access    Public
+router.post("/validate", Controllers.validateEmail);
+
+// @route     POST api/users/img
+// @desc      Test Image Upload
+// @access    Public
+router.post("/subscribe", Controllers.subscribeUser);
 
 module.exports = router;

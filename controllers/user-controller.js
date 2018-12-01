@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const config = require("../config");
 const UserModel = require("../models/user-model");
+const SubscriptionModel = require("../models/subscription-model");
 
 // JWT token generation/validation
 signToken = user => {
@@ -19,7 +20,6 @@ signToken = user => {
 };
 
 exports.uploadImage = (req, res) => {
-  console.log(req.file);
   // Save file path in MongoDB -> req.file.path
   res.status(200).send(req.file);
 };
@@ -42,7 +42,6 @@ exports.registerUser = (req, res) => {
       res.status(201).json({ token });
     })
     .catch(err => {
-      console.log(err);
       res.status(500).json({ error: err });
     });
 };
@@ -104,5 +103,24 @@ exports.updateUser = (req, res) => {
     { new: true }
   )
     .then(resp => res.status(200).json(resp))
+    .catch(err => res.status(500).json(err));
+};
+
+exports.subscribeUser = (req, res) => {
+  // console.log(req.body);
+  // const email = Object.getOwnPropertyNames(req.body)[0];
+  console.log(req.body);
+  const query = { email: req.body.email };
+  SubscriptionModel.findOne(query, (err, user) => {
+    if (err) throw err;
+    if (user) {
+      return res.status(403).json({ error: "Email already exists!" });
+    }
+  });
+
+  const model = new SubscriptionModel(req.body);
+  model
+    .save()
+    .then(resp => res.status(201).json(resp))
     .catch(err => res.status(500).json(err));
 };

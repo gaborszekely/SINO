@@ -78,8 +78,11 @@ section {
   display: -ms-grid;
   display: grid;
   text-align: center;
-  border-bottom: 2px solid black;
   margin: auto;
+}
+
+section:nth-of-type(even) {
+  background-color: #f5f7f8;
 }
 
 input {
@@ -102,12 +105,9 @@ input {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  position: relative;
   background-color: white;
   border-bottom: 1px solid #c8c8dc;
-}
-
-.flex-wrapper ul {
-  margin: auto;
 }
 
 .flex-wrapper li {
@@ -176,15 +176,27 @@ input {
 }
 
 .logoSubtext {
-  display: initial;
-  -webkit-transition: display 400ms ease;
-  transition: display 400ms ease;
+  opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  -webkit-transform-origin: left;
+          transform-origin: left;
+  -webkit-transition: opacity 400ms ease, -webkit-transform 400ms ease;
+  transition: opacity 400ms ease, -webkit-transform 400ms ease;
+  transition: opacity 400ms ease, transform 400ms ease;
+  transition: opacity 400ms ease, transform 400ms ease, -webkit-transform 400ms ease;
 }
 
 .logoSubtext.removed {
-  display: none;
-  -webkit-transition: display 400ms ease;
-  transition: display 400ms ease;
+  opacity: 0;
+  -webkit-transform: scale(0);
+          transform: scale(0);
+  -webkit-transform-origin: left;
+          transform-origin: left;
+  -webkit-transition: opacity 400ms ease, -webkit-transform 400ms ease;
+  transition: opacity 400ms ease, -webkit-transform 400ms ease;
+  transition: opacity 400ms ease, transform 400ms ease;
+  transition: opacity 400ms ease, transform 400ms ease, -webkit-transform 400ms ease;
 }
 
 .top-row-links, .login-links {
@@ -199,6 +211,13 @@ input {
   display: -ms-flexbox;
   display: flex;
   position: relative;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.top-row-links > ul {
+  margin-right: 4em;
 }
 
 .login-links {
@@ -281,9 +300,9 @@ input {
   position: absolute;
   bottom: 0px;
   left: 50%;
+  padding-top: 20px;
   -webkit-transform: translateX(-50%) translateY(100%);
           transform: translateX(-50%) translateY(100%);
-  padding-top: 20px;
 }
 
 .more-links-popdown-inner {
@@ -370,8 +389,8 @@ header {
       -ms-flex-flow: row nowrap;
           flex-flow: row nowrap;
   position: relative;
-  background: -webkit-gradient(linear, left top, right top, from(rgba(21, 38, 54, 0.5)), color-stop(50%, rgba(21, 38, 54, 0.3)), to(rgba(21, 38, 54, 0.5))), url(https://img1.wsimg.com/isteam/stock/2397);
-  background: linear-gradient(to right, rgba(21, 38, 54, 0.5) 0%, rgba(21, 38, 54, 0.3) 50%, rgba(21, 38, 54, 0.5) 100%), url(https://img1.wsimg.com/isteam/stock/2397);
+  background: -webkit-gradient(linear, left top, right top, from(rgba(10, 19, 27, 0.5)), color-stop(50%, rgba(10, 19, 27, 0.3)), to(rgba(10, 19, 27, 0.5))), url(https://img1.wsimg.com/isteam/stock/2397);
+  background: linear-gradient(to right, rgba(10, 19, 27, 0.5) 0%, rgba(10, 19, 27, 0.3) 50%, rgba(10, 19, 27, 0.5) 100%), url(https://img1.wsimg.com/isteam/stock/2397);
   background-repeat: no-repeat;
   background-size: cover;
   background-origin: border-box;
@@ -436,19 +455,18 @@ header #inner-box .button:hover {
 }
 
 .button {
-  font-size: 14px;
+  font-size: 1em;
 }
 
 .login-button {
   padding: .8em 1.6em;
-  background-color: white;
-  color: #008fe1;
+  background-color: #008fe1;
+  color: #fff;
   font-size: 0.9em;
-  border: 2px solid #008fe1;
 }
 
 .login-button:hover {
-  background-color: #008fe1;
+  background-color: #00a0f0;
   color: #fff;
 }
 
@@ -472,6 +490,12 @@ header #inner-box .button:hover {
 
 .loginpage-button:hover {
   background-color: #00a0f0;
+}
+
+.subscribeButton {
+  font-size: 0.8em;
+  padding: .8em 3.2em;
+  border: none;
 }
 
 .link {
@@ -541,6 +565,30 @@ button:focus,
   grid-gap: 0.5em;
 }
 
+.loadingPage {
+  height: 100vh;
+  width: 100vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: #fcfcfc;
+}
+
+.largeLoader {
+  height: 50px;
+  width: auto;
+}
+
 .abContainer {
   display: -ms-grid;
   display: grid;
@@ -577,12 +625,90 @@ button:focus,
           transform: translateX(-15%);
 }
 
+.socialMediaWrapper {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: auto auto auto auto;
+      grid-template-columns: auto auto auto auto;
+  margin: 4em auto;
+}
+
+.socialIconContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  height: 50px;
+  width: 50px;
+  margin-right: 3em;
+  background-color: #0075c1;
+  border-radius: 50%;
+}
+
+.socialIconContainer:last-of-type {
+  margin-right: 0;
+}
+
+.socialIcon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+          transform: translateX(-50%) translateY(-50%);
+}
+
+.subscribeWrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  background: -webkit-gradient(linear, left top, right top, from(rgba(10, 19, 27, 0.7)), color-stop(50%, rgba(10, 19, 27, 0.5)), to(rgba(10, 19, 27, 0.7))), url(http://img1.wsimg.com/isteam/stock/10792);
+  background: linear-gradient(to right, rgba(10, 19, 27, 0.7) 0%, rgba(10, 19, 27, 0.5) 50%, rgba(10, 19, 27, 0.7) 100%), url(http://img1.wsimg.com/isteam/stock/10792);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-origin: border-box;
+  background-position-y: 58%;
+  color: white;
+  padding: 5em 0;
+  width: 100%;
+  height: 100%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.subscribeWrapper h3 {
+  color: white;
+  font-size: 2em;
+}
+
+.subscribeFormWrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.subscribeField {
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 5px;
+  width: 400px;
+  margin-right: 2em;
+  border: none;
+}
+
 /*
  * MARGINS & POSITIONING
  *
  */
 .topMargin {
   margin-top: 6em;
+}
+
+.topMoreMargin {
+  margin-top: 8em;
 }
 
 .topExtraMargin {
@@ -1187,6 +1313,93 @@ li {
   font-size: 0.8em;
 }
 
+.stepContainer {
+  width: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  margin: 3.5em auto 2.5em auto;
+}
+
+.registrationPage h1, .registrationPage h2 {
+  text-align: center;
+}
+
+.registrationPage h1, .registrationPage h2, .registrationPage h3, .registrationPage h4, .registrationPage h5, .registrationPage h6 {
+  color: #0075c1;
+}
+
+.registrationPage h3, .registrationPage h4, .registrationPage h5, .registrationPage h6 {
+  margin-top: 0.5em;
+  margin-bottom: 1.5em;
+}
+
+.registrationPage h3 {
+  margin-left: 20px;
+}
+
+.registrationPage a {
+  display: block;
+  text-align: center;
+  color: #0075c1;
+  margin-bottom: 10px;
+}
+
+.registrationPage p {
+  max-width: 500px;
+  margin: 10px auto;
+  text-align: center;
+}
+
+.registrationPage p > a {
+  display: inline;
+}
+
+.wizardForm {
+  width: 50vw;
+  margin: 25px auto;
+  border: 1px solid #ccc;
+  padding: 10px 30px 30px 30px;
+  -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+          box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  position: relative;
+  text-align: left;
+}
+
+.wizardForm > div {
+  position: relative;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 80px 1fr auto;
+      grid-template-columns: 80px 1fr auto;
+  grid-gap: 1em;
+  margin-bottom: .5em;
+}
+
+.wizardForm > div:last-of-type {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.wizardForm > div input {
+  width: 100%;
+  border: 1px solid #999;
+}
+
 h1, h2, h3 {
   font-family: "Open Sans Condensed";
 }
@@ -1359,24 +1572,32 @@ Button
 }
 
 .btn button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   border: 2px solid #0a7fad;
   border-radius: 20px;
   color: #0a7fad;
   text-transform: uppercase;
   background: none;
-  padding: 11px 46px;
+  padding: 0 46px;
   font-weight: 700;
-  outline: none;
-  cursor: pointer;
-  -webkit-transition: all .3s ease-in-out;
-  transition: all .3s ease-in-out;
-  display: inline-block;
   height: 40px;
   width: 177px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  outline: none;
+  cursor: pointer;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  -webkit-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
 }
 
 .btn button:hover {
@@ -1587,33 +1808,52 @@ Message
  *
  *******************************************************************/
 @media (max-width: 990px) {
+  h1 {
+    font-size: 4em;
+  }
+  header {
+    height: 70vh;
+  }
   .more-links {
     display: initial !important;
+    padding-right: 1em;
   }
   .toHide {
     display: none !important;
   }
+  .wizardForm {
+    width: 66vw;
+  }
 }
 
-@media (min-width: 800px) and (max-width: 870px) {
-  .logo-img {
+@media (max-width: 870px) {
+  .logoWrapper {
     margin-left: 1.5rem;
   }
   .login-links {
     margin-right: 2rem;
   }
+  .more-links {
+    padding-right: 0;
+  }
+  .wizardForm {
+    width: 75vw;
+  }
 }
 
-@media (min-width: 725px) and (max-width: 800px) {
+@media (max-width: 800px) {
   .right-buttons, .login-button {
     display: none !important;
   }
   .top-row-links {
     position: absolute;
-    right: 4em;
+    right: 2em;
     top: 50%;
     -webkit-transform: translateY(-50%);
             transform: translateY(-50%);
+  }
+  .more-links {
+    padding-right: 0;
   }
   .more-links-login {
     display: inline-block !important;
@@ -1623,8 +1863,6 @@ Message
     padding: 1em;
     cursor: pointer;
     color: black;
-    -webkit-transition: background-color 400ms ease;
-    transition: background-color 400ms ease;
   }
   .more-links-login:hover {
     background-color: #f5f7f8;
